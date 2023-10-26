@@ -1,0 +1,7 @@
+.LayoutArea-right {
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 8;
+}
