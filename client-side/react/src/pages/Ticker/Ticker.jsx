@@ -4,10 +4,12 @@ import { useQuery } from 'react-query'
 
 import fetchTickerInfo from '../../services/fetchTickerInfo'
 import fetchConstant from '../../services/fetchConstant'
+import fetchAllHistorical from '../../services/fetchAllHistorical'
 
 const Ticker = () => {
     const tickerInfoResult = useQuery('tickerInfo', () => fetchTickerInfo(2330))
     const constantResult = useQuery('constant', () => fetchConstant(2330))
+    const allHistoricalResult = useQuery('allHistorical', () => fetchAllHistorical(2330))
 
     if (tickerInfoResult.isLoading || constantResult.isLoading) {
         return <span>Loading...</span>
@@ -21,6 +23,7 @@ const Ticker = () => {
     const constant = constantResult.data.data
     console.log(tickerInfo)
     console.log(constant)
+    console.log(allHistoricalResult.data)
 
     const { name: industry } = constant.industry.find(el => el.code === tickerInfo.industry)
     return (

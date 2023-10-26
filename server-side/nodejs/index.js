@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const session = require('express-session')
 const app = express()
 const PORT = 8555
 
@@ -10,9 +11,18 @@ const historicalRoute = require("./routes/historicalRoute")
 const snapshotRoute = require("./routes/snapshotRoute")
 
 app.use(cors());
+app.use(session({
+    secret: 'mySecret',
+    name: 'user', // optional
+    saveUninitialized: false,
+    resave: true,
+    cookie: { historical: { isBusy: false } }
+}))
+
 app.use("/constant", constantRoute);
 app.use("/tickers", tickersRoute);
 app.use("/ticker", tickerRoute);
 app.use("/historical", historicalRoute);
 app.use("/snapshot", snapshotRoute);
+
 app.listen(PORT, () => console.log(`Listening on port http://127.0.0.1:${PORT}`))

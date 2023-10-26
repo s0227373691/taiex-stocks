@@ -32,7 +32,11 @@ router.get('/:symbol/all/', (req, res) => {
     }
 
     const main = async () => {
+        if (req.session.cookie.historical.isBusy) return res.json({ status: 500, msg: 'historical route is busy' })
+
+        req.session.cookie.historical.isBusy = true
         await fetchHistorical()
+        req.session.cookie.historical.isBusy = false
         res.json({ ...info, limit: allHistorical.length, data: allHistorical })
     }
     main()
