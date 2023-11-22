@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const { response } = require('express')
 const client = require('../fugle')
 const delay = require('../utils/delay')
 
@@ -18,7 +17,7 @@ router.get('/:symbol/all/', (req, res) => {
     const fetchHistorical = async (YYYY = new Date().getFullYear()) => {
         const response = await client.stock.historical.candles({
             symbol: req.params.symbol,
-            timeframe: 'M',
+            timeframe: 'D',
             from: `${YYYY}-01-01`, to: `${YYYY}-12-31`,
             fields: 'open,high,low,close,volume,change'
         })

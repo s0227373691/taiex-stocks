@@ -1,17 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Routes, Route } from "react-router-dom";
-
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 import LayoutArea from './components/LayoutArea/LayoutArea'
 import Menu from './components/Menu/Menu'
@@ -21,9 +11,6 @@ import Ticker from './pages/Ticker/Ticker';
 const queryClient = new QueryClient()
 
 function App() {
-
-  const [count, setCount] = useState(0)
-
 
   return (
     <QueryClientProvider client={queryClient}>

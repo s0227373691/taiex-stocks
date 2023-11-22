@@ -20,6 +20,17 @@ router.get('/', (req, res) => {
             { name: '盤中零股', value: 'ODDLOT' },
 
         ],
+        timeframe: [
+            { name: '1分', value: '1' },
+            { name: '5分', value: '5' },
+            { name: '10分', value: '10' },
+            { name: '15分', value: '15' },
+            { name: '30分', value: '30' },
+            { name: '60分', value: '60' },
+            { name: '1天', value: 'D' },
+            { name: '1周', value: 'W' },
+            { name: '1月', value: 'M' },
+        ],
         industry: [
             { name: '公司債、附認股權公司債、認購(售)權證', code: '00' },
             { name: '水泥工業', code: '01' },
