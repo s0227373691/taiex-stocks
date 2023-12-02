@@ -7,6 +7,7 @@ import LayoutArea from './components/LayoutArea/LayoutArea'
 import Menu from './components/Menu/Menu'
 import Overview from './pages/Overview/Overview';
 import Ticker from './pages/Ticker/Ticker';
+import Explor from './pages/Explor/Explor';
 
 const queryClient = new QueryClient()
 
@@ -29,6 +30,14 @@ function App() {
           element={
             <LayoutArea.Right>
               <Ticker />
+            </LayoutArea.Right>
+          }
+        />
+        <Route
+          path='/explor'
+          element={
+            <LayoutArea.Right>
+              <Explor />
             </LayoutArea.Right>
           }
         />

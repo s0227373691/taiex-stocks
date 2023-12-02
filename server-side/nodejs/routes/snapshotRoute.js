@@ -3,8 +3,11 @@ const client = require('../fugle')
 
 router.get('/:market', (req, res) => {
     (async () => {
-        const snapshot = await client.stock.snapshot.quotes({ market: req.params.market })
-        res.json(snapshot)
+        const markets = req.params.market.split(',')
+        const result = await Promise.all(
+            markets.map(market => client.stock.snapshot.quotes({ market }))
+        )
+        res.json(result)
     })()
 })
 

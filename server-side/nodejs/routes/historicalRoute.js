@@ -11,23 +11,28 @@ router.get('/', (req, res) => {
     })()
 })
 
-router.get('/:symbol/all/', (req, res) => {
+router.get('/:symbol/all/:timeframe', (req, res) => {
     let info = {}
     let allHistorical = []
     const fetchHistorical = async (YYYY = new Date().getFullYear()) => {
         const response = await client.stock.historical.candles({
             symbol: req.params.symbol,
-            timeframe: 'D',
+            timeframe: req.params.timeframe,
             from: `${YYYY}-01-01`, to: `${YYYY}-12-31`,
             fields: 'open,high,low,close,volume,change'
         })
         if (response.message === 'Resource Not Found') return
 
-        const { data, ...otherInfo } = response
+        let { data, ...otherInfo } = response
         info = otherInfo
-        allHistorical = [...data, ...allHistorical]
-        await delay(1000)
-        await fetchHistorical(YYYY - 1)
+        await delay(1010)
+        if (data === undefined) {
+            await fetchHistorical(YYYY)
+        } else {
+            data = data.reverse()
+            allHistorical = [...data, ...allHistorical]
+            await fetchHistorical(YYYY - 1)
+        }
     }
 
     const main = async () => {

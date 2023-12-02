@@ -6,9 +6,9 @@ import fetchAllHistorical from '../../../../services/fetchAllHistorical'
 
 
 const TickerTableMa = () => {
-    const { isLoading, isError, error, isSuccess, data } = useQuery('allHistorical', () => fetchAllHistorical(2330))
+    const { isLoading, isError, error, isSuccess, data } = useQuery('allHistorical', () => fetchAllHistorical(2330, 'M'))
 
-
+    console.log(data)
     return (
         <div>
             {isLoading ? <Placeholder animation="glow">
