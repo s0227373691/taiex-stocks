@@ -5,10 +5,9 @@ import Placeholder from 'react-bootstrap/Placeholder';
 import fetchConstant from '../../../../services/fetchConstant'
 import { useMemo } from 'react'
 
-const TickerTimeframe = () => {
+const TickerTimeframe = ({ currentTimeframe, setCurrentTimeframe }) => {
     const { isLoading, isError, error, isSuccess, data } = useQuery('constant', () => fetchConstant())
     const timeframe = useMemo(() => data.data.timeframe, [data])
-
 
     return (
         <div>
@@ -17,7 +16,7 @@ const TickerTimeframe = () => {
                 <Placeholder xs={6} /> <Placeholder xs={8} />
             </Placeholder> :
                 isError ? <p>{error}</p> :
-                    isSuccess && timeframe.map(el => <span key={el.name}>{el.name}</span>)}
+                    isSuccess && timeframe.map(el => <span key={el.name} style={{ color: el.value === currentTimeframe ? 'black' : 'grey', cursor: 'pointer' }} onClick={() => setCurrentTimeframe(el.value)}>{el.name}</span>)}
         </div>
     )
 }

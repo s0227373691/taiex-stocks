@@ -68,7 +68,7 @@ router.get('/', (req, res) => {
             { name: '綠能環保', code: '35' },
             { name: '數位雲端', code: '36' },
             { name: '運動休閒', code: '37' },
-            { name: '	居家生活', code: '38' },
+            { name: '居家生活', code: '38' },
             { name: '管理股票', code: '80' },
         ]
 

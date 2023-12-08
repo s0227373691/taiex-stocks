@@ -6,10 +6,12 @@ import fetchTickerInfo from '../../services/fetchTickerInfo'
 import fetchConstant from '../../services/fetchConstant'
 import TickerTimeframe from './components/TickerTimeframe/TickerTimeframe'
 import TickerTableMa from './components/TickerTableMa/TickerTableMa'
+import { useState } from 'react'
 
 const Ticker = () => {
     const tickerInfoResult = useQuery('tickerInfo', () => fetchTickerInfo(2330))
     const constantResult = useQuery('constant', () => fetchConstant())
+    const [currentTimeframe, setCurrentTimeframe] = useState('D')
 
     if (tickerInfoResult.isLoading || constantResult.isLoading) {
         return <span>Loading...</span>
@@ -36,9 +38,9 @@ const Ticker = () => {
                     <span>{tickerInfo.symbol} {industry}</span>
                 </div>
             </div>
-            <TickerTimeframe />
+            <TickerTimeframe currentTimeframe={currentTimeframe} setCurrentTimeframe={setCurrentTimeframe} />
             <div>
-                <TickerTableMa />
+                <TickerTableMa currentTimeframe={currentTimeframe} />
             </div>
         </div>
     )
