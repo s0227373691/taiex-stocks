@@ -1,32 +1,33 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from "react-query";
 
-import LayoutArea from './components/LayoutArea/LayoutArea'
-import Menu from './components/Menu/Menu'
-import Overview from './pages/Overview/Overview';
-import Ticker from './pages/Ticker/Ticker';
-import Explor from './pages/Explor/Explor';
+import LayoutArea from "./components/LayoutArea/LayoutArea";
+import Menu from "./components/Menu/Menu";
+import Overview from "./pages/Overview/Overview";
+import Ticker from "./pages/Ticker/Ticker";
+import Explor from "./pages/Explor/Explor";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
-
   return (
     <QueryClientProvider client={queryClient}>
       <LayoutArea.Left>
         <Menu />
       </LayoutArea.Left>
       <Routes>
-        <Route path="/"
+        <Route
+          path="/"
           element={
             <LayoutArea.Right>
               <Overview />
-            </LayoutArea.Right>}
+            </LayoutArea.Right>
+          }
         />
         <Route
-          path='/ticker'
+          path="/ticker/:symbol"
           element={
             <LayoutArea.Right>
               <Ticker />
@@ -34,7 +35,7 @@ function App() {
           }
         />
         <Route
-          path='/explor'
+          path="/explor"
           element={
             <LayoutArea.Right>
               <Explor />
@@ -43,7 +44,7 @@ function App() {
         />
       </Routes>
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;
