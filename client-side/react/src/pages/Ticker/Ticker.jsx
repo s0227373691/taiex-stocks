@@ -6,6 +6,7 @@ import fetchTickerInfo from "../../services/fetchTickerInfo";
 import fetchConstant from "../../services/fetchConstant";
 import TickerTimeframe from "./components/TickerTimeframe/TickerTimeframe";
 import TickerTableMa from "./components/TickerTableMa/TickerTableMa";
+import TechnicalIndicators from "./components/TechnicalIndicators/TechnicalIndicators";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -15,7 +16,7 @@ const Ticker = () => {
     fetchTickerInfo(symbol)
   );
   const constantResult = useQuery("constant", () => fetchConstant());
-  const [currentTimeframe, setCurrentTimeframe] = useState("D");
+  const [currentTimeframe, setCurrentTimeframe] = useState("M");
 
   if (tickerInfoResult.isLoading || constantResult.isLoading) {
     return <span>Loading...</span>;
@@ -54,6 +55,7 @@ const Ticker = () => {
       />
       <div>
         <TickerTableMa currentTimeframe={currentTimeframe} />
+        <TechnicalIndicators currentTimeframe={currentTimeframe} />
       </div>
     </div>
   );
