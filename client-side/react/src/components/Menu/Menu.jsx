@@ -32,6 +32,14 @@ const Menu = () => {
       <br />
       <Navbar className="bg-body-tertiary">
         <Container>
+          <NavLink to="/index">
+            <Navbar.Brand>Index</Navbar.Brand>
+          </NavLink>
+        </Container>
+      </Navbar>
+      <br />
+      <Navbar className="bg-body-tertiary">
+        <Container>
           <Navbar.Brand href="#home">
             <img
               src="/img/logo.svg"

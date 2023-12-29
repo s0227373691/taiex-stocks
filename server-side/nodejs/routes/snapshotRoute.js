@@ -1,15 +1,18 @@
-const router = require('express').Router()
-const client = require('../fugle')
+const router = require("express").Router();
+const client = require("../fugle");
 
-router.get('/:market', (req, res) => {
-    (async () => {
-        const markets = req.params.market.split(',')
-        const result = await Promise.all(
-            markets.map(market => client.stock.snapshot.quotes({ market }))
-        )
-        res.json(result)
-    })()
-})
+router.get("/:market", (req, res) => {
+  (async () => {
+    const markets = req.params.market.split(",");
+    const result = await Promise.all(
+      markets.map(async (market) => {
+        const snapshotData = await client.stock.snapshot.quotes({ market });
+        return snapshotData.data.map((el) => ({ ...el, market }));
+      })
+    );
+    const reducedResult = result.reduce((a, b) => a.concat(b));
+    res.json(reducedResult);
+  })();
+});
 
-module.exports = router
-
+module.exports = router;

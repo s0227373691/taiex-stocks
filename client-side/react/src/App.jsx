@@ -8,6 +8,7 @@ import Menu from "./components/Menu/Menu";
 import Overview from "./pages/Overview/Overview";
 import Ticker from "./pages/Ticker/Ticker";
 import Explor from "./pages/Explor/Explor";
+import Index from "./pages/Index/Index";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,14 @@ function App() {
           element={
             <LayoutArea.Right>
               <Overview />
+            </LayoutArea.Right>
+          }
+        />
+        <Route
+          path="/index"
+          element={
+            <LayoutArea.Right>
+              <Index />
             </LayoutArea.Right>
           }
         />
