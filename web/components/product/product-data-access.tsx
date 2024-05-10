@@ -2,11 +2,18 @@
 
 import {useMemo, useState} from 'react'
 import { useQuery } from '@tanstack/react-query';
-import { getAllHistorical} from '@/config/finance'
+import { getAllHistorical, getSnapshot} from '@/config/finance'
 
 interface allHistoricalInterface {
     id: string;
     timeframe: string;
+}
+
+export function useSnapshot() {
+    return useQuery({
+        queryKey: ["snapshot"],
+        queryFn: () => getSnapshot("TSE,OTC")
+    });
 }
 
 export function useAllHistorical({id, timeframe}: allHistoricalInterface) {
@@ -41,7 +48,7 @@ export function useATHRatio({id, timeframe}: allHistoricalInterface) {
     const athRatio = useMemo(() => {
         if(ath) {
             const {close} = allHistorical.data[allHistorical.data.length-1]
-            return (close/ath).toFixed(2)
+            return (close/ath*100).toFixed(2)
         }
     }, [ath])
 
