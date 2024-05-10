@@ -4,11 +4,11 @@ const session = require('express-session')
 const app = express()
 const PORT = 8555
 
-const constantRoute = require("./routes/constantRoute")
-const tickersRoute = require("./routes/tickersRoute")
-const tickerRoute = require("./routes/tickerRoute")
-const historicalRoute = require("./routes/historicalRoute")
-const snapshotRoute = require("./routes/snapshotRoute")
+const constantRoute = require("./src/routes/constant.route")
+const tickersRoute = require("./src/routes/tickers.route")
+const tickerRoute = require("./src/routes/ticker.route")
+const historicalRoute = require("./src/routes/historical.route")
+const snapshotRoute = require("./src/routes/snapshot.route")
 
 app.use(cors());
 app.use(session({

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const client = require("../fugle");
+const client = require("../config/fugle.config");
 
 router.get("/:market", (req, res) => {
   (async () => {

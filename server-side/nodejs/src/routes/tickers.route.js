@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const client = require("../fugle");
+const client = require("../config/fugle.config");
 const delay = require("../utils/delay");
 
 router.get("/:type", (req, res) => {
