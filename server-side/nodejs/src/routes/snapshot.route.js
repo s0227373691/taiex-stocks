@@ -1,17 +1,14 @@
 const router = require("express").Router();
-const client = require("../config/fugle.config");
+
+const Product = require('../models/product.model')
+const {update} = require('../services/product.service')
 
 router.get("/:market", (req, res) => {
   (async () => {
-    const markets = req.params.market.split(",");
-    const result = await Promise.all(
-      markets.map(async (market) => {
-        const snapshotData = await client.stock.snapshot.quotes({ market });
-        return snapshotData.data.map((el) => ({ ...el, market }));
-      })
-    );
-    const reducedResult = result.reduce((a, b) => a.concat(b));
-    res.json(reducedResult);
+    const products = await Product.find()
+    update(req.params.market)
+
+    res.json(products);
   })();
 });
 

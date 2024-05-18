@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const session = require('express-session')
+require('./src/config/db.config')
 const app = express()
 const PORT = 8555
 
@@ -9,6 +10,9 @@ const tickersRoute = require("./src/routes/tickers.route")
 const tickerRoute = require("./src/routes/ticker.route")
 const historicalRoute = require("./src/routes/historical.route")
 const snapshotRoute = require("./src/routes/snapshot.route")
+
+const LogRocket = require('logrocket');
+LogRocket.init('YOUR_APP_ID');
 
 app.use(cors());
 app.use(session({
