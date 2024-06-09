@@ -1,22 +1,32 @@
 const client = require("../config/fugle.config");
 const Historical = require("../models/historical.model");
 
-async function get(_market) {}
+async function query({ symbol, timeframe }) {
+  try {
+    if (symbol === undefined || symbol === null)
+      return { stat: "failed", msg: "Required symbol parameter" };
+
+    const data = await Historical.find(
+      { symbol, timeframe },
+      { _id: false, __v: false, symbol: false, timeframe: false }
+    );
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function update({ symbol, timeframe, data }) {
-  data.map(async (el) => {
-    await Historical.findOneAndUpdate(
-      { symbol, timeframe, date: el.date },
-      el,
-      {
-        new: true,
-        upsert: true,
-      }
-    );
-  });
+  return data.map((el) =>
+    Historical.findOneAndUpdate({ symbol, timeframe, date: el.date }, el, {
+      new: true,
+      upsert: true,
+    })
+  );
 }
 
 module.exports = {
-  get,
+  query,
   update,
 };
