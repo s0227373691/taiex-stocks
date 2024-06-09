@@ -11,7 +11,8 @@ export async function getSnapshot(market: string) {
 
 
 export async function getAllHistorical(symbol: string, timeframe: string) {
-    const url = new URL(`/historical/${symbol}/all/${timeframe}`, serverURL)
+    // const url = new URL(`/historical/${symbol}/all/${timeframe}`, serverURL)
+    const url = new URL(`/historical?symbol=${symbol}&timeframe=${timeframe}`, serverURL)
     const response = await fetch(url)
     const json = await response.json()
 
