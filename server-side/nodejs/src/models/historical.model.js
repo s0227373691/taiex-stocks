@@ -8,7 +8,7 @@ const historicalSchema = new mongoose.Schema({
   low: Number,
   close: Number,
   volume: Number,
-  date: String,
+  date: Date,
 });
 
 const Historical = mongoose.model("Historical", historicalSchema);

@@ -9,7 +9,7 @@ async function query({ symbol, timeframe }) {
     const data = await Historical.find(
       { symbol, timeframe },
       { _id: false, __v: false, symbol: false, timeframe: false }
-    );
+    ).sort({ date: 1 });
 
     return data;
   } catch (error) {
@@ -18,12 +18,21 @@ async function query({ symbol, timeframe }) {
 }
 
 async function update({ symbol, timeframe, data }) {
-  return data.map((el) =>
-    Historical.findOneAndUpdate({ symbol, timeframe, date: el.date }, el, {
-      new: true,
-      upsert: true,
-    })
-  );
+  return data.map(async (el) => {
+    try {
+      const date = new Date(el.date);
+      await Historical.findOneAndUpdate(
+        { symbol, timeframe, date },
+        { ...el, date },
+        {
+          new: true,
+          upsert: true,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
 }
 
 module.exports = {
