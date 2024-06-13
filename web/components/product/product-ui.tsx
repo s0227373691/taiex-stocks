@@ -7,6 +7,7 @@ import {
     useATHRatio,
     useAllHistorical,
     useCurrentPrice,
+    useProductInfo,
     useSnapshot,
 } from './product-data-access'
 import { useMemo } from 'react'
@@ -75,6 +76,16 @@ export function SymbolList() {
                 </ul>
             </div>
         </>
+    )
+}
+
+export function Title({ id }: { id: string }) {
+    const productInfo = useProductInfo(id)
+
+    return (
+        <div className="p-4 text-2xl">
+            {productInfo?.symbol} {productInfo?.name}
+        </div>
     )
 }
 

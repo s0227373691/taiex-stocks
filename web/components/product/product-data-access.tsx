@@ -27,7 +27,6 @@ export function useATH({ id, timeframe }: allHistoricalInterface) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
 
     const ath = useMemo(() => {
-        console.log(allHistorical)
         if (allHistorical) {
             let _ath = 0
             let i = 0
@@ -80,4 +79,9 @@ export function useATHMaxDrawdown({ id, timeframe }: allHistoricalInterface) {
     }, [ath])
 
     return maxDrawdown
+}
+
+export function useProductInfo(id) {
+    const { data } = useSnapshot()
+    return useMemo(() => data?.find((el) => el.symbol === id), [data])
 }
