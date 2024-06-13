@@ -27,6 +27,7 @@ export function useATH({ id, timeframe }: allHistoricalInterface) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
 
     const ath = useMemo(() => {
+        console.log(allHistorical)
         if (allHistorical) {
             let _ath = 0
             let i = 0
@@ -45,8 +46,8 @@ export function useCurrentPrice({ id, timeframe }: allHistoricalInterface) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
     return useMemo(() => {
         if (allHistorical) {
-            const { close } = allHistorical.data[allHistorical.data.length - 1]
-            return close
+            const candle = allHistorical.data[allHistorical.data.length - 1]
+            return candle?.close
         }
     }, [allHistorical])
 }

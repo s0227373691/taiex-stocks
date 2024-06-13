@@ -59,10 +59,13 @@ export function SymbolList() {
 
     return (
         <>
-            <div className="h-full ml-auto">
-                <ul className="h-full overflow-y-auto hover:overflow-scroll">
+            <div className="w-1 hover:w-auto fixed top-0 right-0 h-screen hover:p-4">
+                <ul className="h-full overflow-y-scroll py-4 rounded-lg bg-gray-600 flex flex-col">
                     {data.map((el) => (
-                        <li key={el.symbol}>
+                        <li
+                            key={el.symbol}
+                            className="hover:bg-gray-500 px-4 py-2"
+                        >
                             <Link href={`/product/${el.symbol}`}>
                                 <div className="w-12">{el.symbol}</div>
                                 <span>{el.name}</span>
