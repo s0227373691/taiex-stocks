@@ -29,10 +29,10 @@ async function fullHistorical(req, res) {
     });
 
     const currentYYYY = new Date().getFullYear();
-    YYYY < currentYYYY && (await delay(1000), syncHistorical(++YYYY));
+    YYYY < currentYYYY && (await delay(1000), await syncHistorical(++YYYY));
   }
 
-  syncHistorical(2010);
+  await syncHistorical(2010);
 
   res.json({});
 }
