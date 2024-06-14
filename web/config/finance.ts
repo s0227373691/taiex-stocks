@@ -11,15 +11,12 @@ export async function getSnapshot(market: string) {
 
 
 export async function getAllHistorical(symbol: string, timeframe: string) {
-    // const url = new URL(`/historical/${symbol}/all/${timeframe}`, serverURL)
-    const url = new URL(`/historical?symbol=${symbol}&timeframe=${timeframe}`, serverURL)
-    const response = await fetch(url)
-    const json = await response.json()
-
-    if (json.status === 500) {
-        await delay(1000);
-        return await getAllHistorical(symbol, timeframe);
+    try{
+        const url = new URL(`/historical?symbol=${symbol}&timeframe=${timeframe}`, serverURL)
+        const response = await fetch(url)
+        const json = await response.json()
+        return json;
+    }catch(error){
+        console.error(error)
     }
-
-    return json;
 };

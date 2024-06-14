@@ -17,6 +17,7 @@ import { useParams } from 'next/navigation'
 
 export default () => {
     const { productId } = useParams()
+    console.log(productId)
 
     return (
         <>

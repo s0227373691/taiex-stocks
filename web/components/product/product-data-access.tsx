@@ -81,7 +81,7 @@ export function useATHMaxDrawdown({ id, timeframe }: allHistoricalInterface) {
     return maxDrawdown
 }
 
-export function useProductInfo(id) {
+export function useProductInfo(id: string) {
     const { data } = useSnapshot()
-    return useMemo(() => data?.find((el) => el.symbol === id), [data])
+    return useMemo(() => data?.find((el: any) => el.symbol === id), [data])
 }
