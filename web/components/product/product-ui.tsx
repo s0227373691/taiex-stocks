@@ -11,6 +11,7 @@ import {
     useSnapshot,
 } from './product-data-access'
 import { useMemo } from 'react'
+import { useCurrent, useEMA, useEMAs } from '../hooks/hooks'
 
 export function AllHistorical({
     id,
@@ -269,6 +270,28 @@ export function MaxDrawdownRatioCard({
                     last week
                 </p>
             </div>
+        </div>
+    )
+}
+
+export function Wave({ id, timeframe }: { id: string; timeframe: string }) {
+    const { data } = useAllHistorical({ id, timeframe })
+    const values = useMemo(() => data?.data.map((el: any) => el.close), [data])
+    const [ema12, ema34, ema55] = useEMAs([12, 34, 55], values)
+    const currentEMA12 = useCurrent(ema12)
+    const currentEMA34 = useCurrent(ema34)
+    const currentEMA55 = useCurrent(ema55)
+
+    return (
+        <div>
+            <div>
+                {currentEMA12 > currentEMA55
+                    ? `${timeframe} Long`
+                    : `${timeframe} Short`}
+            </div>
+            <div>ema12: {currentEMA12}</div>
+            <div>ema34: {currentEMA34}</div>
+            <div>ema55: {currentEMA55}</div>
         </div>
     )
 }

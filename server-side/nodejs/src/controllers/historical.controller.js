@@ -2,19 +2,6 @@ const client = require("../config/fugle.config");
 const delay = require("../utils/delay");
 const historicalService = require("../services/historical.service");
 
-async function get(req, res) {
-  await delay(1000);
-  const data = await client.stock.historical.candles({
-    symbol: "0050",
-    timeframe: "M",
-    from: "2023-01-01",
-    to: "2023-12-31",
-    fields: "open,high,low,close,volume,change",
-  });
-  //    .then(data => console.log(data));
-  res.json(data);
-}
-
 async function getAll(req, res) {
   let info = {};
   let allHistorical = [];
@@ -72,7 +59,6 @@ async function query(req, res) {
 }
 
 module.exports = {
-  get,
   getAll,
   query,
 };

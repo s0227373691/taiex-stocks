@@ -11,6 +11,7 @@ import {
     MaxDrawdownCard,
     MaxDrawdownRatioCard,
     Title,
+    Wave,
 } from './product-ui'
 import { useParams } from 'next/navigation'
 
@@ -27,6 +28,11 @@ export default () => {
                         <ATHRatioCard id={productId} timeframe={'M'} />
                         <MaxDrawdownCard id={productId} timeframe={'M'} />
                         <MaxDrawdownRatioCard id={productId} timeframe={'M'} />
+                    </div>
+                    <div className="mb-12 p-4">
+                        <Wave id={productId} timeframe={'D'} />
+                        <Wave id={productId} timeframe={'W'} />
+                        <Wave id={productId} timeframe={'M'} />
                     </div>
                 </div>
             </div>
