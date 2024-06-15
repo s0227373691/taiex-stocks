@@ -18,8 +18,8 @@ async function query({ symbol, timeframe }) {
 }
 
 async function update({ symbol, timeframe, data }) {
-  return data.map(async (el) => {
-    try {
+  try {
+    return data.map(async (el) => {
       const date = new Date(el.date);
       await Historical.findOneAndUpdate(
         { symbol, timeframe, date },
@@ -29,10 +29,10 @@ async function update({ symbol, timeframe, data }) {
           upsert: true,
         }
       );
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {

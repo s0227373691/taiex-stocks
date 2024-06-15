@@ -34,7 +34,7 @@ async function fullHistorical(req, res) {
 
   await syncHistorical(2010);
 
-  res.json({});
+  res.json({ symbol, timeframe });
 }
 
 module.exports = {

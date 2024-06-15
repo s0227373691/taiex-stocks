@@ -2,6 +2,8 @@
 
 import { useMemo } from 'react'
 import { useSnapshot } from './sync-data-access'
+import { syncFullHistorical } from '@/config/finance'
+import { delay } from '@/utils'
 
 export function SymbolList() {
     const { data } = useSnapshot()
@@ -10,7 +12,7 @@ export function SymbolList() {
         [data]
     )
     if (!stocks) return null
-    console.log(stocks.length)
+
     return (
         <div className="p-4">
             <div className="max-w-screen-xl mx-auto px-4 md:px-8 bg-white">
@@ -23,6 +25,29 @@ export function SymbolList() {
                             Lorem Ipsum is simply dummy text of the printing and
                             typesetting industry.
                         </p>
+                    </div>
+                    <div className="text-black">
+                        <button
+                            onClick={() => {
+                                const sync = async (index) => {
+                                    await syncFullHistorical(
+                                        stocks[index].symbol,
+                                        'D'
+                                    )
+                                    await delay(1000)
+                                    index += 1
+                                    console.log(
+                                        index,
+                                        stocks[index].symbol,
+                                        'D'
+                                    )
+                                    stocks.length !== sync(index)
+                                }
+                                sync(0)
+                            }}
+                        >
+                            full historical
+                        </button>
                     </div>
                 </div>
                 <div className="mt-12 relative h-max overflow-auto">

@@ -20,3 +20,34 @@ export async function getAllHistorical(symbol: string, timeframe: string) {
         console.error(error)
     }
 };
+
+export async function syncFullHistorical(symbol: string, timeframe: string) {
+    try{
+        // const url = new URL(`/sync/historical`, serverURL)
+        // const response = await fetch(url)
+        // const json = await response.json()
+        // return json;
+
+        const data = {
+            symbol,
+            timeframe
+        }
+        const url = new URL(`/sync/historical`, serverURL)
+
+        const response = await fetch(url,{
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      console.log(response)
+      if(response.ok){
+        console.log("Yeai!")
+      }else{
+        console.log("Oops! Something is wrong.")
+      }
+    }catch(error){
+        console.error(error)
+    }
+}
