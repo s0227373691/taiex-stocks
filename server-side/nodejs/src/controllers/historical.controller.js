@@ -1,6 +1,8 @@
 const client = require("../config/fugle.config");
+const exchange = require("../config/exchange.config");
 const delay = require("../utils/delay");
 const historicalService = require("../services/historical.service");
+const format = require("../utils/format.util");
 
 async function getAll(req, res) {
   let info = {};
@@ -45,6 +47,7 @@ async function getAll(req, res) {
 }
 
 async function query(req, res) {
+  console.log("query");
   const query = req.query;
   const data = await historicalService.query({
     symbol: query.symbol,
@@ -58,7 +61,30 @@ async function query(req, res) {
   });
 }
 
+const queryCrypto = async (req, res) => {
+  const params = req.params;
+  const query = req.query;
+
+  const symbol = query.symbol || "BTCUSDT";
+  const timeframe = query.timeframe || "1M";
+  const limit = query.limit || 1000;
+
+  if (params.exchange === "Binance") {
+    const OHLCV = await exchange.Binance.fetchOHLCV(
+      symbol,
+      timeframe,
+      undefined,
+      limit
+    );
+    const formated = format.binance(OHLCV);
+    res.json({ symbol, timeframe, data: formated });
+  } else {
+    res.json({ stat: "failed", msg: "exist exchange" });
+  }
+};
+
 module.exports = {
   getAll,
   query,
+  queryCrypto,
 };

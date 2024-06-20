@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 require("./src/config/db.config");
 const app = express();
-const PORT = 8555;
+const PORT = process.env.PORT || 8555;
 
 const constantRoute = require("./src/routes/constant.route");
 const tickersRoute = require("./src/routes/tickers.route");
