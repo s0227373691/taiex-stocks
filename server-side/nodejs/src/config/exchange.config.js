@@ -4,6 +4,7 @@ const createExchange = (parameter) => {
   const Exchange = ccxt[parameter.id];
   return new Exchange({
     options: { adjustForTimeDifference: true },
+    timeout: 30000,
     apiKey: parameter.apiKey,
     secret: parameter.secret,
   });

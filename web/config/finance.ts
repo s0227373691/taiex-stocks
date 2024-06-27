@@ -23,11 +23,6 @@ export async function getAllHistorical(symbol: string, timeframe: string) {
 
 export async function syncFullHistorical(symbol: string, timeframe: string) {
     try{
-        // const url = new URL(`/sync/historical`, serverURL)
-        // const response = await fetch(url)
-        // const json = await response.json()
-        // return json;
-
         const data = {
             symbol,
             timeframe
@@ -51,3 +46,14 @@ export async function syncFullHistorical(symbol: string, timeframe: string) {
         console.error(error)
     }
 }
+
+export async function fetchHistoricalCrypto(exchange: string, symbol: string, timeframe: string) {
+  try{
+      const url = new URL(`/historical/crypto/${exchange}?symbol=${symbol}&timeframe=${timeframe}`, serverURL)
+      const response = await fetch(url)
+      const json = await response.json()
+      return json;
+  }catch(error){
+      console.error(error)
+  }
+};
