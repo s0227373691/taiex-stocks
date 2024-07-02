@@ -1,7 +1,11 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { useHistoricalCrypto, useSortEMAs } from './crypto-data-access'
+import {
+    useHistoricalCrypto,
+    useSortEMAs,
+    useSymbol,
+} from './crypto-data-access'
 import { useVegasTunnel } from '@/components/hooks/hooks'
 
 export function Wave({
@@ -71,7 +75,8 @@ export function Wave({
     )
 }
 
-export function WrappedWave({ symbol }: { symbole: string }) {
+export function WrappedWave() {
+    const [symbol] = useSymbol()
     return (
         <div>
             <div className="flex gap-4 p-4">
@@ -95,6 +100,36 @@ export function WrappedWave({ symbol }: { symbole: string }) {
                 <Wave symbol={symbol} timeframe={'3m'} title="3 minutes" />
                 <Wave symbol={symbol} timeframe={'1m'} title="1 minutes" />
             </div>
+        </div>
+    )
+}
+
+export function SymbolTitle() {
+    const [symbol, setSymbol] = useSymbol()
+    const [showInput, setShowInput] = useState(false)
+    const [inputVal, setInputVal] = useState(symbol)
+    return (
+        <div className="p-4">
+            {showInput ? (
+                <input
+                    className="bg-gray-600 text-xl p-1"
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter')
+                            setShowInput(false), setSymbol(inputVal)
+                        if (e.key === 'Escape')
+                            setShowInput(false), setInputVal(symbol)
+                    }}
+                />
+            ) : (
+                <div
+                    className="text-xl p-1"
+                    onDoubleClick={() => setShowInput(true)}
+                >
+                    {symbol}
+                </div>
+            )}
         </div>
     )
 }

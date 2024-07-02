@@ -34,3 +34,7 @@ export function useSortEMAs(values: number[]) {
         return emas
     }, [veagas])
 }
+
+export function useSymbol() {
+    return useState('BTCUSDT')
+}

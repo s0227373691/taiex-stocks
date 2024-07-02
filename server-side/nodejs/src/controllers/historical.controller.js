@@ -47,7 +47,6 @@ async function getAll(req, res) {
 }
 
 async function query(req, res) {
-  console.log("query");
   const query = req.query;
   const data = await historicalService.query({
     symbol: query.symbol,
