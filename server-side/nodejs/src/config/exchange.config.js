@@ -29,7 +29,7 @@ const exchanges = {
 };
 
 module.exports = {
-  Binance: createExchange(exchanges.binance),
-  BinanceCOINM: createExchange(exchanges.binancecoinm),
+  binance: createExchange(exchanges.binance),
+  binanceCoinM: createExchange(exchanges.binancecoinm),
   BinanceUSDM: createExchange(exchanges.binanceusdm),
 };

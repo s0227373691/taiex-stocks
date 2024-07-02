@@ -2,6 +2,7 @@ const client = require("../config/fugle.config");
 const exchange = require("../config/exchange.config");
 const delay = require("../utils/delay");
 const historicalService = require("../services/historical.service");
+const marketService = require("../services/market.service");
 const format = require("../utils/format.util");
 
 async function getAll(req, res) {
@@ -82,8 +83,16 @@ const queryCrypto = async (req, res) => {
   }
 };
 
+const queryPerp = async (req, res) => {
+  const binanceMarket = await marketService.fetchPerp("binance");
+
+  const data = [{ exchange: "binance", market: binanceMarket }];
+  res.json({ data });
+};
+
 module.exports = {
   getAll,
   query,
   queryCrypto,
+  queryPerp,
 };

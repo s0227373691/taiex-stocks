@@ -14,6 +14,7 @@ const tickerRoute = require("./src/routes/ticker.route");
 const historicalRoute = require("./src/routes/historical.route");
 const snapshotRoute = require("./src/routes/snapshot.route");
 const syncRoute = require("./src/routes/sync.route");
+const marketRoute = require("./src/routes/market.route");
 
 const LogRocket = require("logrocket");
 LogRocket.init("YOUR_APP_ID");
@@ -38,6 +39,7 @@ app.use("/ticker", tickerRoute);
 app.use("/historical", historicalRoute);
 app.use("/snapshot", snapshotRoute);
 app.use("/sync", syncRoute);
+app.use("/market", marketRoute);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://127.0.0.1:${PORT}`)
