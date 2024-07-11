@@ -14,7 +14,7 @@ async function fullHistorical(req, res) {
   //   Syncing data
   const { symbol, timeframe } = body;
   async function syncHistorical(YYYY) {
-    const data = await client.stock.historical.candles({
+    const response = await client.stock.historical.candles({
       symbol,
       timeframe,
       from: `${YYYY}-01-01`,
@@ -23,9 +23,9 @@ async function fullHistorical(req, res) {
     });
 
     await historicalService.update({
-      symbol: data.symbol,
-      timeframe: data.timeframe,
-      data: data.data,
+      symbol: response.symbol,
+      timeframe: response.timeframe,
+      data: response.data,
     });
 
     const currentYYYY = new Date().getFullYear();
@@ -37,6 +37,34 @@ async function fullHistorical(req, res) {
   res.json({ symbol, timeframe });
 }
 
+async function historicalCount(req, res) {
+  //   Check parameters
+  if (req.query.symbol === null || req.query.symbol === undefined)
+    res.json({ stat: "error", msg: "Required symbol parameter" });
+
+  //   Syncing data
+  const { symbol } = req.query;
+  const timeframes = ["M", "W", "D"];
+  const promise = timeframes.map((timeframe) =>
+    historicalService.queryCount({
+      symbol,
+      timeframe,
+    })
+  );
+
+  const timeframeCounts = await Promise.all(promise);
+
+  res.json({
+    symbol,
+    count: {
+      M: timeframeCounts[0],
+      W: timeframeCounts[1],
+      D: timeframeCounts[2],
+    },
+  });
+}
+
 module.exports = {
   fullHistorical,
+  historicalCount,
 };

@@ -19,7 +19,7 @@ async function query({ symbol, timeframe }) {
 
 async function update({ symbol, timeframe, data }) {
   try {
-    return data.map(async (el) => {
+    return data?.map(async (el) => {
       const date = new Date(el.date);
       await Historical.findOneAndUpdate(
         { symbol, timeframe, date },
@@ -35,7 +35,19 @@ async function update({ symbol, timeframe, data }) {
   }
 }
 
+async function queryCount({ symbol, timeframe }) {
+  try {
+    return await Historical.find(
+      { symbol, timeframe },
+      { _id: false, __v: false, symbol: false, timeframe: false }
+    ).countDocuments();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 module.exports = {
   query,
   update,
+  queryCount,
 };

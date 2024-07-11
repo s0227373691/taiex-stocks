@@ -1,17 +1,12 @@
 'use client'
 
-import { useMemo } from 'react'
-import { useSnapshot } from './sync-data-access'
+import { useEffect, useMemo, useState } from 'react'
+import { useHistoricalCount, useSnapshot, useTaixe } from './sync-data-access'
 import { syncFullHistorical } from '@/config/finance'
 import { delay } from '@/utils'
 
 export function SymbolList() {
-    const { data } = useSnapshot()
-    const stocks = useMemo(
-        () => data?.filter((el: any) => el.symbol.length === 4),
-        [data]
-    )
-    if (!stocks) return null
+    const { stocks, syncFullTimeframe } = useTaixe()
 
     return (
         <div className="p-4">
@@ -27,78 +22,126 @@ export function SymbolList() {
                         </p>
                     </div>
                     <div className="text-black">
-                        <button
-                            onClick={() => {
-                                const sync = async (index) => {
-                                    await syncFullHistorical(
-                                        stocks[index].symbol,
-                                        'D'
-                                    )
-                                    await delay(1000)
-                                    index += 1
-                                    console.log(
-                                        index,
-                                        stocks[index].symbol,
-                                        'D'
-                                    )
-                                    stocks.length !== sync(index)
-                                }
-                                sync(0)
-                            }}
-                        >
-                            full historical
-                        </button>
+                        <SyncTaiexButton
+                            stocks={stocks}
+                            syncFullTimeframe={syncFullTimeframe}
+                        />
                     </div>
                 </div>
                 <div className="mt-12 relative h-max overflow-auto">
-                    <table className="w-full table-auto text-sm text-left">
-                        <thead className="text-gray-600 font-medium border-b">
-                            <tr>
-                                <th className="py-3 pr-6">symbol</th>
-                                <th className="py-3 pr-6">name</th>
-                                <th className="py-3 pr-6">status</th>
-                                <th className="py-3 pr-6">Purchase</th>
-                                <th className="py-3 pr-6">price</th>
-                                <th className="py-3 pr-6"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="text-gray-600 divide-y">
-                            {stocks.map((el: any) => (
-                                <tr key={el._id}>
-                                    <td className="pr-6 py-4 whitespace-nowrap">
-                                        {el.symbol}
-                                    </td>
-                                    <td className="pr-6 py-4 whitespace-nowrap">
-                                        {el.name}
-                                    </td>
-                                    <td className="pr-6 py-4 whitespace-nowrap">
-                                        <span
-                                            className={`px-3 py-2 rounded-full font-semibold text-xs ${
-                                                el.status == 'Active'
-                                                    ? 'text-green-600 bg-green-50'
-                                                    : 'text-blue-600 bg-blue-50'
-                                            }`}
-                                        >
-                                            {el.status}
-                                        </span>
-                                    </td>
-                                    <td className="pr-6 py-4 whitespace-nowrap">
-                                        {el.plan}
-                                    </td>
-                                    <td className="pr-6 py-4 whitespace-nowrap">
-                                        {el.price}
-                                    </td>
-                                    <td className="text-right whitespace-nowrap">
-                                        <a className="py-1.5 px-3 text-gray-600 hover:text-gray-500 duration-150 hover:bg-gray-50 border rounded-lg">
-                                            Manage
-                                        </a>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <TaiexTable
+                        stocks={stocks}
+                        syncFullTimeframe={syncFullTimeframe}
+                    />
                 </div>
             </div>
         </div>
+    )
+}
+
+export function TaiexTable({
+    stocks,
+    syncFullTimeframe,
+}: {
+    stocks: any
+    syncFullTimeframe: any
+}) {
+    if (!stocks) return null
+
+    return (
+        <table className="w-full table-auto text-sm text-left">
+            <thead className="text-gray-600 font-medium border-b">
+                <tr>
+                    <th className="py-3 pr-6">symbol</th>
+                    <th className="py-3 pr-6">name</th>
+                    <th className="py-3 pr-6">status</th>
+                    <th className="py-3 pr-6">Purchase</th>
+                    <th className="py-3 pr-6">price</th>
+                    <th className="py-3 pr-6">sync</th>
+                </tr>
+            </thead>
+            <tbody className="text-gray-600 divide-y">
+                {stocks.map((el: any) => (
+                    <TaiexTableRow
+                        key={el._id}
+                        syncFullTimeframe={() => syncFullTimeframe(el.symbol)}
+                        {...el}
+                    />
+                ))}
+            </tbody>
+        </table>
+    )
+}
+
+export function TaiexTableRow(props: any) {
+    const { data, refetch } = useHistoricalCount(props?.symbol)
+
+    useEffect(() => {
+        refetch()
+    }, [props?.isActive])
+
+    const syncHandler = async () => {
+        await props.syncFullTimeframe()
+        refetch()
+    }
+
+    return (
+        <tr>
+            <td className="pr-6 py-4 whitespace-nowrap">{props?.symbol}</td>
+            <td className="pr-6 py-4 whitespace-nowrap">{props?.name}</td>
+            <td className="pr-6 py-4 whitespace-nowrap">
+                <span
+                    className={`px-3 py-2 rounded-full font-semibold text-xs ${
+                        props?.isActive
+                            ? 'text-red-600 bg-red-50'
+                            : 'text-green-600 bg-green-50'
+                    }`}
+                >
+                    {props?.isActive ? 'Active' : 'Inactive'}
+                </span>
+            </td>
+            <td className="pr-6 py-4 whitespace-nowrap">{data?.count.M}</td>
+            <td className="pr-6 py-4 whitespace-nowrap">{data?.count.W}</td>
+            <td className="pr-6 py-4 whitespace-nowrap">{data?.count.D}</td>
+            <td className="text-right whitespace-nowrap">
+                <button
+                    className="py-1.5 px-3 text-gray-600 hover:text-gray-500 duration-150 hover:bg-gray-50 border rounded-lg"
+                    onClick={syncHandler}
+                >
+                    Sync
+                </button>
+            </td>
+        </tr>
+    )
+}
+
+export function SyncTaiexButton({
+    stocks,
+    syncFullTimeframe,
+}: {
+    stocks: string
+    syncFullTimeframe: any
+}) {
+    const [index, setIndex] = useState(0)
+    if (!stocks) return null
+
+    return (
+        <>
+            <button
+                onClick={() => {
+                    const sync = async (index: number) => {
+                        await syncFullTimeframe(stocks[index].symbol)
+                        setIndex((prev) => ++prev)
+                        sync(++index)
+                    }
+                    sync(index)
+                }}
+            >
+                full historical
+            </button>
+            <div>
+                {index} / {stocks.length - 1}
+            </div>
+        </>
     )
 }

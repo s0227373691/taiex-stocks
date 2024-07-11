@@ -68,3 +68,10 @@ export async function fetchPerp() {
     console.error(error)
 }
 }
+
+export async function fetchHistoricalCount(symbol: string) {
+  const url = new URL(`/sync/historical/count?symbol=${symbol}`, serverURL)
+  const response = await fetch(url)
+  const json = await response.json()
+  return json
+}

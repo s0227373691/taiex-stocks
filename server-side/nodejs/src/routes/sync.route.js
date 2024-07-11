@@ -12,5 +12,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/historical", syncController.fullHistorical);
+router.get("/historical/count", syncController.historicalCount);
 
 module.exports = router;
