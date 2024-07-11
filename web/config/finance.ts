@@ -57,3 +57,14 @@ export async function fetchHistoricalCrypto(exchange: string, symbol: string, ti
       console.error(error)
   }
 };
+
+export async function fetchPerp() {
+  try{
+    const url = new URL(`/market`, serverURL)
+    const response = await fetch(url)
+    const json = await response.json()
+    return json;
+}catch(error){
+    console.error(error)
+}
+}

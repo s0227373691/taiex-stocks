@@ -1,12 +1,11 @@
 const exchange = require("../config/exchange.config");
 
-async function fetchPerp(exchange) {
+async function fetchPerp(_exchange) {
   try {
-    if (exchange === "binance")
+    if (_exchange === "binance")
       return await exchange.BinanceUSDM.fetchMarkets();
   } catch (error) {
     console.error(error);
-    res.json({ error });
   }
 }
 

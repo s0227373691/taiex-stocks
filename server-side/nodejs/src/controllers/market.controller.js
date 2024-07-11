@@ -86,8 +86,7 @@ const queryCrypto = async (req, res) => {
 const queryPerp = async (req, res) => {
   const binanceMarket = await marketService.fetchPerp("binance");
 
-  const data = [{ exchange: "binance", market: binanceMarket }];
-  res.json({ data });
+  res.json({ exchange: "binance", market: binanceMarket });
 };
 
 module.exports = {
