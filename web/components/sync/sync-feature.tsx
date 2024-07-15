@@ -1,10 +1,10 @@
 import React from 'react'
-import { SymbolList } from './sync-ui'
+import { BreadCrumb, SymbolList } from './sync-ui'
 
 export default () => {
     return (
         <div>
-            sync-feature
+            <BreadCrumb />
             <SymbolList />
         </div>
     )
