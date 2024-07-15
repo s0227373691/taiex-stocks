@@ -26,7 +26,7 @@ export function AllHistorical() {
 
     if (isLoading) return <>Loading...</>
 
-    console.log('AllHistorical', data)
+    // console.log('AllHistorical', data)
     return (
         <div>
             AllHistorical
