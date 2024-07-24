@@ -1,16 +1,28 @@
 const mongoose = require("mongoose");
+const { candleSchema } = require("./candles.model");
 
 const historicalSchema = new mongoose.Schema({
-  symbol: String,
+  symbol: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'tickers',
+    require: true
+  },
   timeframe: String,
-  open: Number,
-  high: Number,
-  low: Number,
-  close: Number,
-  volume: Number,
-  date: Date,
+  // candles: [candleSchema],
+  candles: [{
+    open: Number,
+    high: Number,
+    low: Number,
+    close: Number,
+    volume: Number,
+    date: Date,
+  }],
+
 });
 
-const Historical = mongoose.model("Historical", historicalSchema);
+const HistoricalModel = mongoose.model("Historical", historicalSchema);
 
-module.exports = Historical;
+module.exports = {
+  HistoricalModel,
+  historicalSchema
+};

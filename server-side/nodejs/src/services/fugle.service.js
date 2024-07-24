@@ -43,8 +43,36 @@ async function fetchFullIndex() {
     return { tikers: [twseIndex, tpexIndex] }
 }
 
+async function fetchFullCandles({ symbol, timeframe }) {
+    const candles = []
+    async function syncHistorical(YYYY) {
+        const response = await client.stock.historical.candles({
+            symbol,
+            timeframe,
+            from: `${YYYY}-01-01`,
+            to: `${YYYY}-12-31`,
+            fields: "open,high,low,close,volume",
+        });
+
+        if (response.statusCode !== 404) {
+            candles.push(...response.data)
+        }
+
+        const currentYYYY = new Date().getFullYear();
+        YYYY < currentYYYY && (await delay(1000), await syncHistorical(++YYYY));
+    }
+
+    await syncHistorical(2010);
+
+    return candles.map(candle => ({
+        ...candle,
+        date: new Date(candle.date)
+    })).sort((a, b) => a.date - b.date);
+}
+
 module.exports = {
     fetchTickers,
     fetchFullEquity,
-    fetchFullIndex
+    fetchFullIndex,
+    fetchFullCandles
 }

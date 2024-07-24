@@ -82,8 +82,24 @@ const queryCrypto = async (req, res) => {
   }
 };
 
+const syncData = async (req, res) => {
+  const body = req.body;
+
+  //   Check parameters
+  if (body.symbol === null || body.symbol === undefined)
+    res.json({ stat: "error", msg: "Required symbol parameter" });
+  if (body.timeframe === null || body.timeframe === undefined)
+    res.json({ stat: "error", msg: "Required timeframe parameter" });
+
+  const { symbol, timeframe } = body
+  const data = await historicalService.update({ symbol, timeframe })
+  res.json({ statusCode: 200, data });
+
+}
+
 module.exports = {
   getAll,
   query,
   queryCrypto,
+  syncData
 };

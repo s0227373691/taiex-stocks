@@ -1,12 +1,13 @@
-const client = require("../config/fugle.config");
-const Historical = require("../models/historical.model");
+const { HistoricalModel } = require("../models/historical.model");
+const tickerService = require("../services/ticker.service");
+const fugleService = require("../services/fugle.service");
 
 async function query({ symbol, timeframe }) {
   try {
     if (symbol === undefined || symbol === null)
       return { stat: "failed", msg: "Required symbol parameter" };
 
-    const data = await Historical.find(
+    const data = await HistoricalSchema.find(
       { symbol, timeframe },
       { _id: false, __v: false, symbol: false, timeframe: false }
     ).sort({ date: 1 });
@@ -17,19 +18,25 @@ async function query({ symbol, timeframe }) {
   }
 }
 
-async function update({ symbol, timeframe, data }) {
+async function update({ symbol, timeframe }) {
   try {
-    return data?.map(async (el) => {
-      const date = new Date(el.date);
-      await Historical.findOneAndUpdate(
-        { symbol, timeframe, date },
-        { ...el, date },
-        {
-          new: true,
-          upsert: true,
-        }
-      );
-    });
+    const symbolDocument = await tickerService.queryTicker(symbol)
+    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+
+    const candles = await fugleService.fetchFullCandles({ symbol, timeframe })
+
+    return HistoricalModel.findOneAndUpdate(
+      { symbol: symbolDocument._id, timeframe },
+      {
+        symbol: symbolDocument._id,
+        timeframe,
+        candles
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
   } catch (error) {
     console.log(error);
   }
@@ -37,14 +44,19 @@ async function update({ symbol, timeframe, data }) {
 
 async function queryCount({ symbol, timeframe }) {
   try {
-    return await Historical.find(
-      { symbol, timeframe },
+    const symbolDocument = await tickerService.queryTicker(symbol)
+    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+
+    return await HistoricalSchema.find(
+      { symbol: symbolDocument._id, timeframe },
       { _id: false, __v: false, symbol: false, timeframe: false }
     ).countDocuments();
   } catch (error) {
     console.error(error);
   }
 }
+
+
 
 module.exports = {
   query,

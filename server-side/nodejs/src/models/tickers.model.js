@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { historicalSchema } = require('./historical.model')
 
 const TickersSchema = new mongoose.Schema({
     market: String,
@@ -19,7 +20,9 @@ const TickersSchema = new mongoose.Schema({
     updateTime: {
         type: Date,
         required: true,
-    }
+    },
+    historicals: [historicalSchema]
+
 });
 
 const Tickers = mongoose.model('Tickers', TickersSchema);

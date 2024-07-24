@@ -40,6 +40,7 @@ app.use("/historical", historicalRoute);
 app.use("/snapshot", snapshotRoute);
 app.use("/sync", syncRoute);
 app.use("/market", marketRoute);
+// app.use("/externalData", marketRoute);
 
 app.listen(PORT, () =>
   console.log(`Listening on port http://127.0.0.1:${PORT}`)

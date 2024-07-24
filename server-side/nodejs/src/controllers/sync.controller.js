@@ -22,11 +22,13 @@ async function fullHistorical(req, res) {
       fields: "open,high,low,close,volume",
     });
 
-    await historicalService.update({
-      symbol: response.symbol,
-      timeframe: response.timeframe,
-      data: response.data,
-    });
+    if (response.statusCode !== 404) {
+      await historicalService.update({
+        symbol: response.symbol,
+        timeframe: response.timeframe,
+        data: response.data,
+      });
+    }
 
     const currentYYYY = new Date().getFullYear();
     YYYY < currentYYYY && (await delay(1000), await syncHistorical(++YYYY));
@@ -63,6 +65,8 @@ async function historicalCount(req, res) {
     },
   });
 }
+
+
 
 module.exports = {
   fullHistorical,
