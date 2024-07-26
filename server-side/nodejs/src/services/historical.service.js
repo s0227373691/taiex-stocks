@@ -7,10 +7,13 @@ async function query({ symbol, timeframe }) {
     if (symbol === undefined || symbol === null)
       return { stat: "failed", msg: "Required symbol parameter" };
 
-    const data = await HistoricalSchema.find(
-      { symbol, timeframe },
-      { _id: false, __v: false, symbol: false, timeframe: false }
-    ).sort({ date: 1 });
+    const symbolDocument = await tickerService.queryTicker(symbol)
+    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+
+    const data = await HistoricalModel.find(
+      { symbol: symbolDocument._id, timeframe },
+      // { _id: false, __v: false, symbol: false, timeframe: false }
+    )
 
     return data;
   } catch (error) {
@@ -24,6 +27,7 @@ async function update({ symbol, timeframe }) {
     if (!symbolDocument) return console.log(`Not found ${symbol}`)
 
     const candles = await fugleService.fetchFullCandles({ symbol, timeframe })
+
 
     return HistoricalModel.findOneAndUpdate(
       { symbol: symbolDocument._id, timeframe },
@@ -47,10 +51,12 @@ async function queryCount({ symbol, timeframe }) {
     const symbolDocument = await tickerService.queryTicker(symbol)
     if (!symbolDocument) return console.log(`Not found ${symbol}`)
 
-    return await HistoricalSchema.find(
+    const data = await HistoricalModel.findOne(
       { symbol: symbolDocument._id, timeframe },
-      { _id: false, __v: false, symbol: false, timeframe: false }
-    ).countDocuments();
+      // { _id: false, __v: false, symbol: false, timeframe: false }
+    )
+
+    return data;
   } catch (error) {
     console.error(error);
   }

@@ -54,6 +54,7 @@ async function fetchFullCandles({ symbol, timeframe }) {
             fields: "open,high,low,close,volume",
         });
 
+
         if (response.statusCode !== 404) {
             candles.push(...response.data)
         }

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { candleSchema } = require("./candles.model");
 
 const historicalSchema = new mongoose.Schema({
   symbol: {
@@ -8,7 +7,6 @@ const historicalSchema = new mongoose.Schema({
     require: true
   },
   timeframe: String,
-  // candles: [candleSchema],
   candles: [{
     open: Number,
     high: Number,

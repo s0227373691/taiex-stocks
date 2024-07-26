@@ -64,28 +64,6 @@ export function useTaixe() {
     return { stocks, syncFullTimeframe }
 }
 
-export function useSyncTaixe() {
-    const [status, setStatus] = useState('Inactive')
-    const syncFullTimeframe = async (symbol: string) => {
-        console.log('Starting sync')
-        console.log('Syncing', 'Month', symbol, '...')
-        setStatus('Active')
-        await syncFullHistorical(symbol, 'M')
-        await delay(1000)
-
-        console.log('Syncing', 'Week', symbol, '...')
-        await syncFullHistorical(symbol, 'W')
-        await delay(1000)
-
-        console.log('Syncing', 'Day', symbol, '...')
-        await syncFullHistorical(symbol, 'D')
-        await delay(1000)
-
-        console.log('Final', symbol)
-        setStatus('Inactive')
-    }
-}
-
 export function useHistoricalCount(symbol: string) {
     return useQuery({
         queryKey: ['historicalCount', symbol],

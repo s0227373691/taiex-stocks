@@ -34,7 +34,7 @@ export async function getAllHistorical(symbol: string, timeframe: string) {
 export async function syncFullHistorical(symbol: string, timeframe: string) {
     try {
         const url = createServerURL()
-        url.pathname = '/sync/historical'
+        url.pathname = '/historical/sync'
 
         const data = {
             symbol,
@@ -91,7 +91,7 @@ export async function fetchPerp() {
 
 export async function fetchHistoricalCount(symbol: string) {
     const url = createServerURL()
-    url.pathname = `/sync/historical/count`
+    url.pathname = `/historical/candle/count`
     url.searchParams.append('symbol', symbol)
 
     const response = await fetch(url)

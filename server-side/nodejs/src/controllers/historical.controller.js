@@ -97,9 +97,34 @@ const syncData = async (req, res) => {
 
 }
 
+
+async function queryCandleCount(req, res) {
+  const query = req.query;
+
+  const timeframes = ["M", "W", "D"]
+  const candleCount = await Promise.all(
+    timeframes.map(async (timeframe) => historicalService.queryCount({
+      symbol: query.symbol,
+      timeframe,
+    }))
+
+  )
+
+  res.json({
+    symbol: query.symbol,
+    timeframe: query.timeframe,
+    count: {
+      M: candleCount[0]?.candles.length,
+      W: candleCount[1]?.candles.length,
+      D: candleCount[2]?.candles.length,
+    }
+  });
+}
+
 module.exports = {
   getAll,
   query,
   queryCrypto,
-  syncData
+  syncData,
+  queryCandleCount
 };
