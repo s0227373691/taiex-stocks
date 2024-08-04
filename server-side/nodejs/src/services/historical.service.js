@@ -7,13 +7,13 @@ async function query({ symbol, timeframe }) {
     if (symbol === undefined || symbol === null)
       return { stat: "failed", msg: "Required symbol parameter" };
 
-    const symbolDocument = await tickerService.queryTicker(symbol)
-    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+    const symbolDocument = await tickerService.queryTicker(symbol);
+    if (!symbolDocument) return console.log(`Not found ${symbol}`);
 
     const data = await HistoricalModel.find(
-      { symbol: symbolDocument._id, timeframe },
+      { symbol: symbolDocument._id, timeframe }
       // { _id: false, __v: false, symbol: false, timeframe: false }
-    )
+    );
 
     return data;
   } catch (error) {
@@ -23,18 +23,17 @@ async function query({ symbol, timeframe }) {
 
 async function update({ symbol, timeframe }) {
   try {
-    const symbolDocument = await tickerService.queryTicker(symbol)
-    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+    const symbolDocument = await tickerService.queryTicker(symbol);
+    if (!symbolDocument) return console.log(`Not found ${symbol}`);
 
-    const candles = await fugleService.fetchFullCandles({ symbol, timeframe })
-
+    const candles = await fugleService.fetchFullCandles({ symbol, timeframe });
 
     return HistoricalModel.findOneAndUpdate(
       { symbol: symbolDocument._id, timeframe },
       {
         symbol: symbolDocument._id,
         timeframe,
-        candles
+        candles,
       },
       {
         new: true,
@@ -48,21 +47,19 @@ async function update({ symbol, timeframe }) {
 
 async function queryCount({ symbol, timeframe }) {
   try {
-    const symbolDocument = await tickerService.queryTicker(symbol)
-    if (!symbolDocument) return console.log(`Not found ${symbol}`)
+    const symbolDocument = await tickerService.queryTicker(symbol);
+    if (!symbolDocument) return console.error(`Not found ${symbol}`);
 
     const data = await HistoricalModel.findOne(
-      { symbol: symbolDocument._id, timeframe },
+      { symbol: symbolDocument._id, timeframe }
       // { _id: false, __v: false, symbol: false, timeframe: false }
-    )
+    );
 
     return data;
   } catch (error) {
     console.error(error);
   }
 }
-
-
 
 module.exports = {
   query,

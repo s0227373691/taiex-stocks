@@ -98,3 +98,21 @@ export async function fetchHistoricalCount(symbol: string) {
     const json = await response.json()
     return json
 }
+
+export async function updateTickers(){
+    const url = createServerURL()
+    url.pathname = `/tickers/sync`
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update tickers');
+    }
+  
+    return response.json();
+  };
