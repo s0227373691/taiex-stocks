@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import { ReactQueryProvider } from './react-query-provider'
-import { Sidebar } from '@/components/ui/ui'
+import { NavBar } from '@/components/ui/ui'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,8 +21,8 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <ReactQueryProvider>
+                    <NavBar />
                     <div className="flex">
-                        <Sidebar />
                         <div className="flex w-full h-screen">{children}</div>
                     </div>
                 </ReactQueryProvider>

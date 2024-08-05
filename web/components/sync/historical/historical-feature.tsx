@@ -1,6 +1,6 @@
 'use client'
 
-import { SymbolList } from './historical-ui'
+import { SymbolList, SyncTaiexButton } from './historical-ui'
 
 const HistoricalFeature = () => {
     return (

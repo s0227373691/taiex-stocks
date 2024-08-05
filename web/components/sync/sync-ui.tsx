@@ -79,17 +79,13 @@ export function TaskCard({
 }) {
     return (
         <Link href={href}>
-            <div key={name} className="p-4">
-                <div className="max-w-screen-xl mx-auto px-4 md:px-8 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                    <div className="items-start justify-between md:flex">
-                        <div className="max-w-lg">
-                            <h3 className="text-gray-300 text-xl font-bold sm:text-2xl">
-                                {name}
-                            </h3>
-                            <p className="text-gray-600 mt-2">{description}</p>
-                        </div>
-                    </div>
-                </div>
+            <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {name}
+                </h5>
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                    {/* {description} */}
+                </p>
             </div>
         </Link>
     )

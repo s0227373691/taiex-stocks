@@ -19,6 +19,10 @@ export function SymbolList() {
                             typesetting industry.
                         </p>
                     </div>
+                    <SyncTaiexButton
+                        stocks={stocks}
+                        syncFullTimeframe={syncFullTimeframe}
+                    />
                     <div>
                         <Modal
                             stocks={stocks}
@@ -176,12 +180,7 @@ export function TaiexTable({
                         <th className="py-3 pr-6">Month count</th>
                         <th className="py-3 pr-6">Week count</th>
                         <th className="py-3 pr-6">Day count</th>
-                        <th className="py-3 pr-6">
-                            <SyncTaiexButton
-                                stocks={stocks}
-                                syncFullTimeframe={syncFullTimeframe}
-                            />
-                        </th>
+                        <th className="py-3 pr-6"></th>
                     </tr>
                 </thead>
                 <tbody className="text-gray-300 divide-y">
