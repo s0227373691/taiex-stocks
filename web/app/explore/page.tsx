@@ -1,3 +1,4 @@
-import ExploreFeature from "@/components/explore/explore-feature";
+import ExploreFeature from '@/components/explore/explore-feature'
 
-export default () => <ExploreFeature />
+const Page = () => <ExploreFeature />
+export default Page

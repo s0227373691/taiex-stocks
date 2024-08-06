@@ -1,3 +1,4 @@
 import SyncFeature from '@/components/sync/sync-feature'
 
-export default () => <SyncFeature />
+const Page = () => <SyncFeature />
+export default Page

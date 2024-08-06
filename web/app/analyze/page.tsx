@@ -1,3 +1,4 @@
 import AnalyzeFeature from '@/components/analyze/analyze-feature'
 
-export default () => <AnalyzeFeature />
+const Page = () => <AnalyzeFeature />
+export default Page
