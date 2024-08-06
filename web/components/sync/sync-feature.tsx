@@ -1,7 +1,7 @@
 import React from 'react'
 import { BreadCrumb, TaskCards } from './sync-ui'
 
-export default () => {
+const Feature = () => {
     return (
         <div>
             <BreadCrumb />
@@ -9,3 +9,5 @@ export default () => {
         </div>
     )
 }
+
+export default Feature

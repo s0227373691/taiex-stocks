@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default () => {
+const Feature = () => {
     return <div>analyze-feature</div>
 }
+
+export default Feature

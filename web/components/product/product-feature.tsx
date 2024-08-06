@@ -15,7 +15,7 @@ import {
 } from './product-ui'
 import { useParams } from 'next/navigation'
 
-export default () => {
+const Feature = () => {
     const { productId } = useParams()
 
     return (
@@ -40,3 +40,5 @@ export default () => {
         </>
     )
 }
+
+export default Feature

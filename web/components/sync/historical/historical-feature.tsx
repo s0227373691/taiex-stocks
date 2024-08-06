@@ -2,7 +2,7 @@
 
 import { SymbolList, SyncTaiexButton } from './historical-ui'
 
-const HistoricalFeature = () => {
+const Feature = () => {
     return (
         <div>
             historical-feature
@@ -11,4 +11,4 @@ const HistoricalFeature = () => {
     )
 }
 
-export default HistoricalFeature
+export default Feature

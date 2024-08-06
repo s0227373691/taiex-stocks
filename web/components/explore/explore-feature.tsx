@@ -3,7 +3,7 @@
 import React from 'react'
 import { PerpList } from './explore-ui'
 
-export default () => {
+const Feature = () => {
     return (
         <div>
             ExploreFeature
@@ -11,3 +11,5 @@ export default () => {
         </div>
     )
 }
+
+export default Feature

@@ -4,7 +4,7 @@ import React from 'react'
 
 import { SymbolTitle, WrappedWave } from './cypto-ui'
 
-export default () => {
+const Feature = () => {
     return (
         <>
             <div>
@@ -14,3 +14,5 @@ export default () => {
         </>
     )
 }
+
+export default Feature
