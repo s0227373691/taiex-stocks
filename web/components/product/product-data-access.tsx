@@ -4,11 +4,6 @@ import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getAllHistorical, getSnapshot } from '@/config/finance'
 
-interface allHistoricalInterface {
-    id: string
-    timeframe: string
-}
-
 export function useSnapshot() {
     return useQuery({
         queryKey: ['snapshot'],
@@ -16,14 +11,20 @@ export function useSnapshot() {
     })
 }
 
-export function useAllHistorical({ id, timeframe }: allHistoricalInterface) {
+export function useAllHistorical({
+    id,
+    timeframe,
+}: {
+    id: string
+    timeframe: string
+}) {
     return useQuery({
         queryKey: ['allHistorical', id, timeframe],
         queryFn: () => getAllHistorical(id, timeframe),
     })
 }
 
-export function useATH({ id, timeframe }: allHistoricalInterface) {
+export function useATH({ id, timeframe }: { id: string; timeframe: string }) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
 
     const ath = useMemo(() => {
@@ -41,7 +42,13 @@ export function useATH({ id, timeframe }: allHistoricalInterface) {
     return ath
 }
 
-export function useCurrentPrice({ id, timeframe }: allHistoricalInterface) {
+export function useCurrentPrice({
+    id,
+    timeframe,
+}: {
+    id: string
+    timeframe: string
+}) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
     return useMemo(() => {
         if (allHistorical) {
@@ -51,7 +58,13 @@ export function useCurrentPrice({ id, timeframe }: allHistoricalInterface) {
     }, [allHistorical])
 }
 
-export function useATHRatio({ id, timeframe }: allHistoricalInterface) {
+export function useATHRatio({
+    id,
+    timeframe,
+}: {
+    id: string
+    timeframe: string
+}) {
     const ath = useATH({ id, timeframe })
     const currentPrice = useCurrentPrice({ id, timeframe })
 
@@ -62,7 +75,13 @@ export function useATHRatio({ id, timeframe }: allHistoricalInterface) {
     }, [ath])
 }
 
-export function useATHMaxDrawdown({ id, timeframe }: allHistoricalInterface) {
+export function useATHMaxDrawdown({
+    id,
+    timeframe,
+}: {
+    id: string
+    timeframe: string
+}) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
     const ath = useATH({ id, timeframe })
     const maxDrawdown = useMemo(() => {
@@ -81,7 +100,7 @@ export function useATHMaxDrawdown({ id, timeframe }: allHistoricalInterface) {
     return maxDrawdown
 }
 
-export function useProductInfo(id: string) {
+export function useProductInfo(id: string | string[]) {
     const { data } = useSnapshot()
     return useMemo(() => data?.find((el: any) => el.symbol === id), [data])
 }

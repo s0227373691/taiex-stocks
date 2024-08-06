@@ -10,7 +10,7 @@ import {
     useProductInfo,
     useSnapshot,
 } from './product-data-access'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useCurrent, useEMA, useEMAs, useVegasTunnel } from '../hooks/hooks'
 
 export function AllHistorical({
@@ -80,7 +80,11 @@ export function SymbolList() {
     )
 }
 
-export function Title({ id }: { id: string }) {
+interface TitleProps {
+    id: string | string[]
+}
+
+export const Title: React.FC<TitleProps> = ({ id }) => {
     const productInfo = useProductInfo(id)
 
     return (
@@ -90,15 +94,18 @@ export function Title({ id }: { id: string }) {
     )
 }
 
-export function ATHRatioCard({
+interface ATHRatioCardProps {
+    id: string | string[]
+    timeframe: string
+}
+
+export const ATHRatioCard: React.FC<ATHRatioCardProps> = ({
     id,
     timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const athRatio = useATHRatio({ id, timeframe })
+}) => {
+    const idString = Array.isArray(id) ? id.join(',') : id
 
+    const athRatio = useATHRatio({ id: idString, timeframe })
     return (
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
@@ -136,8 +143,15 @@ export function ATHRatioCard({
     )
 }
 
-export function ATHCard({ id, timeframe }: { id: string; timeframe: string }) {
-    const ath = useATH({ id, timeframe })
+interface ATHCardProps {
+    id: string | string[]
+    timeframe: string
+}
+
+export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
+    const idString = Array.isArray(id) ? id.join(',') : id
+
+    const ath = useATH({ id: idString, timeframe })
 
     return (
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
@@ -175,15 +189,17 @@ export function ATHCard({ id, timeframe }: { id: string; timeframe: string }) {
         </div>
     )
 }
+interface MaxDrawdownCardProps {
+    id: string | string[]
+    timeframe: string
+}
 
-export function MaxDrawdownCard({
+export const MaxDrawdownCard: React.FC<MaxDrawdownCardProps> = ({
     id,
     timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const maxDrawdown = useATHMaxDrawdown({ id, timeframe })
+}) => {
+    const idString = Array.isArray(id) ? id.join(',') : id
+    const maxDrawdown = useATHMaxDrawdown({ id: idString, timeframe })
 
     return (
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
@@ -222,15 +238,18 @@ export function MaxDrawdownCard({
     )
 }
 
-export function MaxDrawdownRatioCard({
+interface MaxDrawdownRatioCardProps {
+    id: string | string[]
+    timeframe: string
+}
+
+export const MaxDrawdownRatioCard: React.FC<MaxDrawdownRatioCardProps> = ({
     id,
     timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const maxDrawdown = useATHMaxDrawdown({ id, timeframe })
-    const currentPrice = useCurrentPrice({ id, timeframe })
+}) => {
+    const idString = Array.isArray(id) ? id.join(',') : id
+    const maxDrawdown = useATHMaxDrawdown({ id: idString, timeframe })
+    const currentPrice = useCurrentPrice({ id: idString, timeframe })
     const ratio = useMemo(() => {
         if (currentPrice && maxDrawdown) {
             return ((currentPrice / maxDrawdown) * 100).toFixed(2)
@@ -274,19 +293,20 @@ export function MaxDrawdownRatioCard({
     )
 }
 
-export function Wave({ id, timeframe }: { id: string; timeframe: string }) {
-    const { data } = useAllHistorical({ id, timeframe })
+interface WaveProps {
+    id: string | string[]
+    timeframe: string
+}
+
+export const Wave: React.FC<WaveProps> = ({ id, timeframe }) => {
+    const idString = Array.isArray(id) ? id.join(',') : id
+
+    const { data } = useAllHistorical({ id: idString, timeframe })
     const values = useMemo(() => data?.data.map((el: any) => el.close), [data])
     const veagas = useVegasTunnel(values)
-    // console.log(timeframe, veagas)
 
     return (
         <div>
-            <div>
-                {veagas.current.ema12 > veagas.current.ema55
-                    ? `${timeframe} Long`
-                    : `${timeframe} Short`}
-            </div>
             <div>ema12: {veagas.current.ema12}</div>
             <div>ema34: {veagas.current.ema34}</div>
             <div>ema55: {veagas.current.ema55}</div>
