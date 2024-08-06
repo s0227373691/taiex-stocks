@@ -64,7 +64,7 @@ export function Wave({
                         {showValue && (
                             <div className="absolute z-10 bg-gray-600 flex flex-col rounded p-4">
                                 {sortEMAs.map(({ value }) => (
-                                    <span>{value}</span>
+                                    <span key={value}>{value}</span>
                                 ))}
                             </div>
                         )}
