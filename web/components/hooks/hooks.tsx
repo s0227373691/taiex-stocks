@@ -22,8 +22,11 @@ export function useCurrent(values: number[] | null) {
     return useMemo(() => (values ? values[values.length - 2] : null), [values])
 }
 
-export function useCompareValues(value1: number, value2: number) {
+export function useCompareValues(value1: number | null, value2: number | null) {
     return useMemo(() => {
+        if (value1 === null && value2 === null) return 0
+        if (value1 === null) return -1
+        if (value2 === null) return 1
         if (value1 > value2) return 1
         if (value1 < value2) return -1
         return 0
