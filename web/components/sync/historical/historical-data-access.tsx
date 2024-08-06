@@ -13,9 +13,14 @@ export function useSnapshot() {
     })
 }
 
+interface Stock {
+    symbol: string
+    isActive: boolean
+}
+
 export function useTaixe() {
     const { data } = useSnapshot()
-    const [stocks, setStocks] = useState(null)
+    const [stocks, setStocks] = useState<Stock[] | null>(null)
 
     useEffect(() => {
         const _stocks = data
@@ -33,8 +38,10 @@ export function useTaixe() {
         isActive: boolean
     }) => {
         setStocks((prev) => {
-            const selected = prev.find((stock) => stock.symbol === symbol)
-            const newStocks = [...prev]
+            const selected = prev?.find((stock: any) => stock.symbol === symbol)
+            if (selected === undefined) return prev
+
+            const newStocks = prev === null ? [] : [...prev]
 
             const index = newStocks.indexOf(selected)
             newStocks[index] = { ...selected, isActive }
