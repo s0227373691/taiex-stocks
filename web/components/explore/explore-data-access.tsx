@@ -19,13 +19,21 @@ export function useHistoricalCryptos(_market: any) {
     const market = useMemo(() => (_market ? _market : []), [_market])
 
     const historicalQueries = useQueries({
-        queries: market.map(({ symbol, timeframe }) => {
-            return {
-                queryKey: ['historical', 'crypto', exchange, symbol, timeframe],
-                queryFn: () =>
-                    fetchHistoricalCrypto(exchange, symbol, timeframe),
+        queries: market.map(
+            ({ symbol, timeframe }: { symbol: string; timeframe: string }) => {
+                return {
+                    queryKey: [
+                        'historical',
+                        'crypto',
+                        exchange,
+                        symbol,
+                        timeframe,
+                    ],
+                    queryFn: () =>
+                        fetchHistoricalCrypto(exchange, symbol, timeframe),
+                }
             }
-        }),
+        ),
     })
 
     return useMemo(() => {
@@ -63,7 +71,7 @@ export function useMutEMA(periods: number[], historicals: any) {
 
                 return { emas, ...el }
             }),
-        [historicals]
+        [periods, historicals]
     )
 }
 
@@ -79,27 +87,5 @@ export function useWaveRank(timeframe: string) {
 
     const cryptos = useMutEMA(periods, historicals)
 
-    const rise = useMemo(() => {
-        console.log(cryptos)
-        return (
-            cryptos &&
-            cryptos.forEach((crypto: any) => {
-                const currentEMAs = periods
-                    .map((period) => {
-                        const emaValues = crypto.emas[period]
-                        return emaValues[emaValues.length - 1]
-                    })
-                    .filter((el) => el !== undefined)
-
-                if (currentEMAs.length < 2) return
-                const sum = currentEMAs.reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    0
-                )
-
-                console.log(currentEMAs)
-            })
-        )
-    }, [cryptos])
     return { cryptos, emaPeriods: periods }
 }
