@@ -63,7 +63,7 @@ export function SymbolList() {
         <>
             <div className="w-1 hover:w-auto fixed top-0 right-0 h-screen hover:p-4">
                 <ul className="h-full overflow-y-scroll py-4 rounded-lg bg-gray-600 flex flex-col">
-                    {data.map((el) => (
+                    {data.map((el: any) => (
                         <li
                             key={el.symbol}
                             className="hover:bg-gray-500 px-4 py-2"

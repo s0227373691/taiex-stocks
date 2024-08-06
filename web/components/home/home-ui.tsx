@@ -12,7 +12,7 @@ export function Snapshot() {
     return (
         <div>
             snapshot
-            {data?.map((el) => (
+            {data?.map((el: any) => (
                 <div key={el.symbol}>
                     {el.type} {el.symbol}
                 </div>
