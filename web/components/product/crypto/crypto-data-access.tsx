@@ -30,7 +30,11 @@ export function useSortEMAs(values: number[]) {
             period: 55,
             value: ema55,
         })
-        emas.sort((a, b) => (a.value > b.value ? -1 : 1))
+        emas.sort((a, b) => {
+            const aValue = a.value !== null ? a.value : -Infinity
+            const bValue = b.value !== null ? b.value : -Infinity
+            return bValue - aValue
+        })
         return emas
     }, [veagas])
 }
