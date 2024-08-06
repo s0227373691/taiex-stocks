@@ -1,7 +1,8 @@
-const createServerURL = () =>
-    new URL(
-        `${process.env.NEXT_PUBLIC_API_SERVER_protocal}//${process.env.NEXT_PUBLIC_API_SERVER_HOST}:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`
-    )
+const createServerURL = () =>{
+    let urlStr = `${process.env.NEXT_PUBLIC_API_SERVER_protocal}//${process.env.NEXT_PUBLIC_API_SERVER_HOST}`
+    process.env.NEXT_PUBLIC_API_SERVER_PORT && (urlStr+=process.env.NEXT_PUBLIC_API_SERVER_PORT)
+    return new URL(urlStr)
+}
 
 export async function getSnapshot(market: string) {
     try {
