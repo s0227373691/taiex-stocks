@@ -3,6 +3,12 @@
 import { useEffect, useState } from 'react'
 import { useHistoricalCount, useTaixe } from './historical-data-access'
 
+interface Stock {
+    symbol: string
+    isActive: boolean
+    // other properties
+}
+
 export function SymbolList() {
     const { stocks, syncFullTimeframe } = useTaixe()
 
@@ -35,7 +41,13 @@ export function SymbolList() {
     )
 }
 
-export function Modal({ stocks, syncFullTimeframe }) {
+export function Modal({
+    stocks,
+    syncFullTimeframe,
+}: {
+    stocks: Stock[] | null
+    syncFullTimeframe: any
+}) {
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleModal = () => {
@@ -124,18 +136,22 @@ export function TaiexTable({
 }) {
     const [rows, setRows] = useState(15)
     const [page, setPage] = useState(0)
-    const [pageStocks, setPageStocks] = useState([])
+    const [pageStocks, setPageStocks] = useState<Stock[]>([])
 
     useEffect(() => {
-        if (stocks) {
+        if (stocks && stocks.length > 0) {
             const _pageStocks = []
             for (let i = 0; i < rows; i++) {
                 const index = rows * page + i
-                _pageStocks.push(stocks[index])
+                if (index < stocks.length) {
+                    _pageStocks.push(stocks[index])
+                }
             }
             setPageStocks(_pageStocks)
+        } else {
+            setPageStocks([])
         }
-    }, [stocks, page])
+    }, [stocks, page, rows])
     if (!stocks) return null
 
     return (
@@ -240,7 +256,7 @@ export function SyncTaiexButton({
     stocks,
     syncFullTimeframe,
 }: {
-    stocks: string
+    stocks: Stock[] | null
     syncFullTimeframe: any
 }) {
     const [index, setIndex] = useState(0)
@@ -256,6 +272,8 @@ export function SyncTaiexButton({
                     const stockObj = stocks.find(
                         (stock) => stock.symbol === symbol
                     )
+                    if (stockObj === undefined) return
+
                     const _index = stocks.indexOf(stockObj)
                     const sync = async (index: number) => {
                         await syncFullTimeframe(stocks[index].symbol)
