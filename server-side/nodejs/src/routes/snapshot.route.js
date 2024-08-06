@@ -6,7 +6,7 @@ const productService = require("../services/product.service");
 router.get("/:market", (req, res) => {
   (async () => {
     const products = await Product.find();
-    productService.update(req.params.market);
+    // productService.update(req.params.market);
 
     res.json(products);
   })();
