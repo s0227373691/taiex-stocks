@@ -26,20 +26,18 @@ export function useAllHistorical({
 
 export function useATH({ id, timeframe }: { id: string; timeframe: string }) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
-
-    const ath = useMemo(() => {
+    return useMemo(() => {
         if (allHistorical) {
             let _ath = 0
             let i = 0
-            while (allHistorical.data.length > i) {
-                const { high } = allHistorical.data[i]
+            while (allHistorical.data[0]?.candles.length > i) {
+                const { high } = allHistorical.data[0]?.candles[i]
                 if (high > _ath) _ath = high
                 i++
             }
             return _ath
         }
     }, [allHistorical])
-    return ath
 }
 
 export function useCurrentPrice({
@@ -52,7 +50,9 @@ export function useCurrentPrice({
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
     return useMemo(() => {
         if (allHistorical) {
-            const candle = allHistorical.data[allHistorical.data.length - 1]
+            const candles = allHistorical.data[0]?.candles
+            if (!candles) return null
+            const candle = candles[candles?.length - 1]
             return candle?.close
         }
     }, [allHistorical])
@@ -84,20 +84,20 @@ export function useATHMaxDrawdown({
 }) {
     const { data: allHistorical } = useAllHistorical({ id, timeframe })
     const ath = useATH({ id, timeframe })
-    const maxDrawdown = useMemo(() => {
+    return useMemo(() => {
         if (ath) {
-            let i = allHistorical.data.length - 1
+            const candles = allHistorical.data[0]?.candles
+            let i = candles.length - 1
             let _maxDrawdown = ath
-            while (ath !== allHistorical.data[i].high) {
-                const { low } = allHistorical.data[i]
+
+            while (ath !== candles[i].high) {
+                const { low } = candles[i]
                 if (_maxDrawdown > low) _maxDrawdown = low
                 i--
             }
             return _maxDrawdown
         }
     }, [ath])
-
-    return maxDrawdown
 }
 
 export function useProductInfo(id: string | string[]) {

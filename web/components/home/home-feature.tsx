@@ -1,11 +1,11 @@
 'use client'
 
-import { Snapshot } from './home-ui'
+import { TableSnapshot } from './home-ui'
 
 const Feature = () => {
     return (
-        <div>
-            <Snapshot />
+        <div className="w-full">
+            <TableSnapshot />
         </div>
     )
 }

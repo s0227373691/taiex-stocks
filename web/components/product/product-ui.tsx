@@ -107,7 +107,7 @@ export const ATHRatioCard: React.FC<ATHRatioCardProps> = ({
 
     const athRatio = useATHRatio({ id: idString, timeframe })
     return (
-        <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
+        <div className="relative flex flex-col bg-clip-border rounded-xl bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -134,10 +134,10 @@ export const ATHRatioCard: React.FC<ATHRatioCardProps> = ({
                 </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
-                <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                {/* <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
                     <strong className="text-green-500">+55%</strong>&nbsp;than
                     last week
-                </p>
+                </p> */}
             </div>
         </div>
     )
@@ -152,9 +152,8 @@ export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
     const idString = Array.isArray(id) ? id.join(',') : id
 
     const ath = useATH({ id: idString, timeframe })
-
     return (
-        <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
+        <div className="relative flex flex-col bg-clip-border rounded-xl  bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -181,10 +180,10 @@ export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
                 </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
-                <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                {/* <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
                     <strong className="text-green-500">+55%</strong>&nbsp;than
                     last week
-                </p>
+                </p> */}
             </div>
         </div>
     )
@@ -202,7 +201,7 @@ export const MaxDrawdownCard: React.FC<MaxDrawdownCardProps> = ({
     const maxDrawdown = useATHMaxDrawdown({ id: idString, timeframe })
 
     return (
-        <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
+        <div className="relative flex flex-col bg-clip-border rounded-xl bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -229,10 +228,10 @@ export const MaxDrawdownCard: React.FC<MaxDrawdownCardProps> = ({
                 </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
-                <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                {/* <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
                     <strong className="text-green-500">+55%</strong>&nbsp;than
                     last week
-                </p>
+                </p> */}
             </div>
         </div>
     )
@@ -252,12 +251,12 @@ export const MaxDrawdownRatioCard: React.FC<MaxDrawdownRatioCardProps> = ({
     const currentPrice = useCurrentPrice({ id: idString, timeframe })
     const ratio = useMemo(() => {
         if (currentPrice && maxDrawdown) {
-            return ((currentPrice / maxDrawdown) * 100).toFixed(2)
+            return ((currentPrice / maxDrawdown - 1) * 100).toFixed(2)
         }
     }, [maxDrawdown, currentPrice])
 
     return (
-        <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">
+        <div className="relative flex flex-col bg-clip-border rounded-xl bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -277,17 +276,17 @@ export const MaxDrawdownRatioCard: React.FC<MaxDrawdownRatioCardProps> = ({
             </div>
             <div className="p-4 text-right">
                 <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                    Max Drawdown Ratio
+                    Distance to maxDrawdown price
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
                     {ratio} %
                 </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
-                <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                {/* <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
                     <strong className="text-green-500">+55%</strong>&nbsp;than
                     last week
-                </p>
+                </p> */}
             </div>
         </div>
     )
@@ -302,11 +301,15 @@ export const Wave: React.FC<WaveProps> = ({ id, timeframe }) => {
     const idString = Array.isArray(id) ? id.join(',') : id
 
     const { data } = useAllHistorical({ id: idString, timeframe })
-    const values = useMemo(() => data?.data.map((el: any) => el.close), [data])
+    const values = useMemo(
+        () => data?.data[0]?.candles.map((el: any) => el.close),
+        [data]
+    )
     const veagas = useVegasTunnel(values)
 
     return (
         <div>
+            <div>{timeframe}</div>
             <div>ema12: {veagas.current.ema12}</div>
             <div>ema34: {veagas.current.ema34}</div>
             <div>ema55: {veagas.current.ema55}</div>
