@@ -6,7 +6,7 @@ cd ./server-side/nodejs
 pnpm install 
 ```
 
-ENV Config:
+ENV config:
 ```env
 PORT = 8555
 
@@ -35,7 +35,7 @@ cd ./web
 pnpm install 
 ```
 
-ENV Config:
+ENV config:
 ```env
 NEXT_PUBLIC_API_SERVER_protocal = "http:"
 NEXT_PUBLIC_API_SERVER_HOST = "127.0.0.1"
