@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import {
     useATH,
     useATHMaxDrawdown,
@@ -8,30 +7,9 @@ import {
     useAllHistorical,
     useCurrentPrice,
     useProductInfo,
-    useSnapshot,
 } from './product-data-access'
 import React, { useMemo } from 'react'
-import { useCurrent, useEMA, useEMAs, useVegasTunnel } from '../hooks/hooks'
-
-export function AllHistorical({
-    id,
-    timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const { isLoading, data } = useAllHistorical({ id, timeframe })
-
-    if (isLoading) return <>Loading...</>
-
-    console.log('AllHistorical', data)
-    return (
-        <div>
-            AllHistorical
-            {/* {data.map(el => <div>{el.type} {el.symbol}</div>)} */}
-        </div>
-    )
-}
+import { useVegasTunnel } from '../hooks/hooks'
 
 export function ATH({ id, timeframe }: { id: string; timeframe: string }) {
     const ath = useATH({ id, timeframe })
@@ -40,43 +18,6 @@ export function ATH({ id, timeframe }: { id: string; timeframe: string }) {
         <div>
             ath: {ath}, athRatio: {athRatio} {athRatio && '%'}{' '}
         </div>
-    )
-}
-
-export function MaxDrawdown({
-    id,
-    timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const maxDrawdown = useATHMaxDrawdown({ id, timeframe })
-    return <div>MaxDrawdown: {maxDrawdown}</div>
-}
-
-export function SymbolList() {
-    const { isLoading, data } = useSnapshot()
-
-    if (isLoading) return null
-
-    return (
-        <>
-            <div className="w-1 hover:w-auto fixed top-0 right-0 h-screen hover:p-4">
-                <ul className="h-full overflow-y-scroll py-4 rounded-lg bg-gray-600 flex flex-col">
-                    {data.map((el: any) => (
-                        <li
-                            key={el.symbol}
-                            className="hover:bg-gray-500 px-4 py-2"
-                        >
-                            <Link href={`/product/${el.symbol}`}>
-                                <div className="w-12">{el.symbol}</div>
-                                <span>{el.name}</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
     )
 }
 
