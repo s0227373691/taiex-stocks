@@ -37,7 +37,16 @@ async function queryTicker(symbol) {
   }
 }
 
+async function queryTickers() {
+  try {
+    return TickersModel.find();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 module.exports = {
   syncExternalData,
   queryTicker,
+  queryTickers,
 };

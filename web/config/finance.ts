@@ -100,6 +100,18 @@ export async function fetchHistoricalCount(symbol: string) {
     return json
 }
 
+export async function getTickers(){
+    const url = createServerURL()
+    url.pathname = '/tickers'
+
+    const response = await fetch(url)
+    if(!response.ok) throw new Error(`Response status: ${response.status}`);
+
+
+    const json = await response.json();
+    return json
+}
+
 export async function updateTickers(){
     const url = createServerURL()
     url.pathname = `/tickers/sync`

@@ -1,11 +1,11 @@
 'use client'
 
-import { TableSnapshot } from './home-ui'
+import { Tickers } from './home-ui'
 
 const Feature = () => {
     return (
         <div className="w-full">
-            <TableSnapshot />
+            <Tickers />
         </div>
     )
 }
