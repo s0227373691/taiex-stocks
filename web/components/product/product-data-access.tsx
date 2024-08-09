@@ -1,16 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { getSnapshot } from '@/config/finance'
-import { useHistorical } from '../data-access'
-
-export function useSnapshot() {
-    return useQuery({
-        queryKey: ['snapshot'],
-        queryFn: () => getSnapshot('TSE,OTC'),
-    })
-}
+import { useHistorical, useTickers } from '../data-access'
 
 export function useATH({ id, timeframe }: { id: string; timeframe: string }) {
     const { data: allHistorical } = useHistorical({ id, timeframe })
@@ -89,6 +80,6 @@ export function useATHMaxDrawdown({
 }
 
 export function useProductInfo(id: string | string[]) {
-    const { data } = useSnapshot()
-    return useMemo(() => data?.find((el: any) => el.symbol === id), [data])
+    const { data } = useTickers()
+    return useMemo(() => data?.data.find((el: any) => el.symbol === id), [data])
 }
