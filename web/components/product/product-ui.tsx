@@ -4,10 +4,10 @@ import {
     useATH,
     useATHMaxDrawdown,
     useATHRatio,
-    useAllHistorical,
     useCurrentPrice,
     useProductInfo,
 } from './product-data-access'
+import { useHistorical } from '../data-access'
 import React, { useMemo } from 'react'
 import { useVegasTunnel } from '../hooks/hooks'
 
@@ -241,7 +241,7 @@ interface WaveProps {
 export const Wave: React.FC<WaveProps> = ({ id, timeframe }) => {
     const idString = Array.isArray(id) ? id.join(',') : id
 
-    const { data } = useAllHistorical({ id: idString, timeframe })
+    const { data } = useHistorical({ id: idString, timeframe })
     const values = useMemo(
         () => data?.data[0]?.candles.map((el: any) => el.close),
         [data]

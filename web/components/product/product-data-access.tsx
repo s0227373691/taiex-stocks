@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchHistorical, getSnapshot } from '@/config/finance'
+import { getSnapshot } from '@/config/finance'
+import { useHistorical } from '../data-access'
 
 export function useSnapshot() {
     return useQuery({
@@ -11,21 +12,8 @@ export function useSnapshot() {
     })
 }
 
-export function useAllHistorical({
-    id,
-    timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    return useQuery({
-        queryKey: ['allHistorical', id, timeframe],
-        queryFn: () => fetchHistorical(id, timeframe),
-    })
-}
-
 export function useATH({ id, timeframe }: { id: string; timeframe: string }) {
-    const { data: allHistorical } = useAllHistorical({ id, timeframe })
+    const { data: allHistorical } = useHistorical({ id, timeframe })
     return useMemo(() => {
         if (allHistorical) {
             let _ath = 0
@@ -47,7 +35,7 @@ export function useCurrentPrice({
     id: string
     timeframe: string
 }) {
-    const { data: allHistorical } = useAllHistorical({ id, timeframe })
+    const { data: allHistorical } = useHistorical({ id, timeframe })
     return useMemo(() => {
         if (allHistorical) {
             const candles = allHistorical.data[0]?.candles
@@ -82,7 +70,7 @@ export function useATHMaxDrawdown({
     id: string
     timeframe: string
 }) {
-    const { data: allHistorical } = useAllHistorical({ id, timeframe })
+    const { data: allHistorical } = useHistorical({ id, timeframe })
     const ath = useATH({ id, timeframe })
     return useMemo(() => {
         if (ath) {
