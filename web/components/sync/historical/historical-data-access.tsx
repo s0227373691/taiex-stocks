@@ -1,17 +1,11 @@
 'use client'
 
-import { fetchHistoricalCount, getSnapshot } from '@/config/finance'
+import { fetchHistoricalCount } from '@/config/finance'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { syncFullHistorical } from '@/config/finance'
 import { delay } from '@/utils'
-
-export function useSnapshot() {
-    return useQuery({
-        queryKey: ['snapshot'],
-        queryFn: () => getSnapshot('TSE,OTC'),
-    })
-}
+import { useTickers } from '@/components/data-access'
 
 interface Stock {
     symbol: string
@@ -19,12 +13,12 @@ interface Stock {
 }
 
 export function useTaixe() {
-    const { data } = useSnapshot()
+    const { data } = useTickers()
     const [stocks, setStocks] = useState<Stock[] | null>(null)
 
     useEffect(() => {
-        const _stocks = data
-            ?.filter((el: any) => el.symbol.length === 4)
+        const _stocks = data?.data
+            .filter((el: any) => el.symbol.length === 4)
             .map((el: any) => ({ ...el, isActive: false }))
 
         setStocks(_stocks)

@@ -4,19 +4,6 @@ const createServerURL = () =>{
     return new URL(urlStr)
 }
 
-export async function getSnapshot(market: string) {
-    try {
-        const url = createServerURL()
-        url.pathname = `/snapshot/${market}`
-
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-    } catch (error) {
-        console.error(error)
-    }
-}
-
 export async function fetchHistorical(symbol: string, timeframe: string) {
     try {
         const url = createServerURL()

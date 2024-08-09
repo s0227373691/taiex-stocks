@@ -12,7 +12,6 @@ const constantRoute = require("./src/routes/constant.route");
 const tickersRoute = require("./src/routes/tickers.route");
 const tickerRoute = require("./src/routes/ticker.route");
 const historicalRoute = require("./src/routes/historical.route");
-const snapshotRoute = require("./src/routes/snapshot.route");
 const syncRoute = require("./src/routes/sync.route");
 const marketRoute = require("./src/routes/market.route");
 
@@ -37,7 +36,6 @@ app.use("/constant", constantRoute);
 app.use("/tickers", tickersRoute);
 app.use("/ticker", tickerRoute);
 app.use("/historical", historicalRoute);
-app.use("/snapshot", snapshotRoute);
 app.use("/sync", syncRoute);
 app.use("/market", marketRoute);
 // app.use("/externalData", marketRoute);
