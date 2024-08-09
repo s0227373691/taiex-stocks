@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getAllHistorical, getSnapshot } from '@/config/finance'
+import { fetchHistorical, getSnapshot } from '@/config/finance'
 
 export function useSnapshot() {
     return useQuery({
@@ -20,7 +20,7 @@ export function useAllHistorical({
 }) {
     return useQuery({
         queryKey: ['allHistorical', id, timeframe],
-        queryFn: () => getAllHistorical(id, timeframe),
+        queryFn: () => fetchHistorical(id, timeframe),
     })
 }
 

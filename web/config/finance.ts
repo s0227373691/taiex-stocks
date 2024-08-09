@@ -17,7 +17,7 @@ export async function getSnapshot(market: string) {
     }
 }
 
-export async function getAllHistorical(symbol: string, timeframe: string) {
+export async function fetchHistorical(symbol: string, timeframe: string) {
     try {
         const url = createServerURL()
         url.pathname = '/historical'
