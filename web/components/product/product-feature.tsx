@@ -6,8 +6,8 @@ import {
     ATHRatioCard,
     MaxDrawdownCard,
     MaxDrawdownRatioCard,
+    MovingAverages,
     Title,
-    Wave,
 } from './product-ui'
 import { useParams } from 'next/navigation'
 
@@ -24,11 +24,7 @@ const Feature = () => {
                     <MaxDrawdownCard id={productId} timeframe={'M'} />
                     <MaxDrawdownRatioCard id={productId} timeframe={'M'} />
                 </div>
-                <div className="mb-12 p-4">
-                    <Wave id={productId} timeframe={'D'} />
-                    <Wave id={productId} timeframe={'W'} />
-                    <Wave id={productId} timeframe={'M'} />
-                </div>
+                <MovingAverages />
             </div>
         </div>
     )
