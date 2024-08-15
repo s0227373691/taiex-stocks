@@ -4,23 +4,31 @@ import React from 'react'
 import { useTickers } from '../data-access'
 import { useRouter } from 'next/navigation'
 
-export function Tickers() {
-    const { isLoading, isError, data } = useTickers()
-
+export function Stocks() {
+    const { isLoading, isError, isSuccess, data } = useTickers()
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-[740px] m-auto mt-12">
+            <div className="mb-8">
+                <h3 className="text-3xl font-semibold text-gray-300 mb-2">
+                    All stocks
+                </h3>
+                <p className="text-sm text-gray-300">
+                    {isSuccess && `${data.data.length} tickers`}
+                </p>
+            </div>
             {isLoading ? (
-                <LoadingTickers />
+                <LoadingStocks />
             ) : isError ? (
                 <div className="text-white">Error</div>
             ) : (
-                <TableTickers data={data} />
+                <TableStocks data={data} />
             )}
         </div>
     )
 }
 
-export function LoadingTickers() {
+export function LoadingStocks() {
+    const arrayEmpty = Array.from(new Array(5), () => null)
     return (
         <div
             role="status"
@@ -33,7 +41,7 @@ export function LoadingTickers() {
                 </div>
                 <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
             </div>
-            {[null, null, null, null, null].map((el, i) => (
+            {arrayEmpty.map((el, i) => (
                 <div
                     key={`${el}` + i}
                     className="flex items-center justify-between pt-4"
@@ -50,7 +58,7 @@ export function LoadingTickers() {
     )
 }
 
-export function TableTickers({ data: { data } }: { data: any }) {
+export function TableStocks({ data: { data } }: { data: any }) {
     const router = useRouter()
 
     return (
@@ -58,16 +66,16 @@ export function TableTickers({ data: { data } }: { data: any }) {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" className="px-6 py-3">
-                        Market
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Type
+                        Ticker
                     </th>
                     <th scope="col" className="px-6 py-3">
                         Symbol
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Name
+                        Market
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Type
                     </th>
                 </tr>
             </thead>
@@ -78,10 +86,10 @@ export function TableTickers({ data: { data } }: { data: any }) {
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
                         onClick={() => router.push(`/product/${el.symbol}`)}
                     >
+                        <td className="px-6 py-4">{el.name}</td>
+                        <td className="px-6 py-4"> {el.symbol}</td>
                         <td className="px-6 py-4">{el.market}</td>
                         <td className="px-6 py-4">{el.type}</td>
-                        <td className="px-6 py-4"> {el.symbol}</td>
-                        <td className="px-6 py-4">{el.name}</td>
                     </tr>
                 ))}
             </tbody>
