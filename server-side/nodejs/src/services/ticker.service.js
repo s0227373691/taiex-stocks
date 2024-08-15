@@ -3,24 +3,22 @@ const fugleService = require("./fugle.service");
 
 async function syncExternalData() {
   try {
-    const equitys = await fugleService.fetchFullEquity();
-    const equityPromises = equitys?.tikers.map((equity) =>
-      updateTicker(equity)
-    );
-    return Promise.all(equityPromises);
+    const fullTickers = await fugleService.fetchFullTickers();
+    const tickerPromises = fullTickers?.tickers.map(updateTicker);
+    return Promise.all(tickerPromises);
   } catch (error) {
     console.error(error);
   }
 }
 
-async function updateTicker(_equity) {
+async function updateTicker(ticker) {
   return TickersModel.findOneAndUpdate(
-    { symbol: _equity.symbol, name: _equity.name },
+    { symbol: ticker.symbol, name: ticker.name },
     {
-      symbol: _equity.symbol,
-      name: _equity.name,
-      type: _equity.type,
-      updateTime: new Date(_equity.date),
+      symbol: ticker.symbol,
+      name: ticker.name,
+      type: ticker.type,
+      updateTime: new Date(ticker.date),
     },
     {
       new: true,

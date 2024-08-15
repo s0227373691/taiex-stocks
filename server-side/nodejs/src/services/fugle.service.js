@@ -9,6 +9,12 @@ async function fetchTickers({ type, exchange, market }) {
   });
 }
 
+async function fetchFullTickers() {
+  const fullEquity = await fetchFullEquity();
+  const fullIndex = await fetchFullIndex();
+  return { tickers: [...fullEquity.tickers, ...fullIndex.tickers] };
+}
+
 async function fetchFullEquity() {
   const twseEquitys = await fetchTickers({ type: "EQUITY", exchange: "TWSE" });
   await delay(1000);
@@ -33,16 +39,34 @@ async function fetchFullEquity() {
     }))
     .filter((el) => el.name);
 
-  return { tikers: [...tikersTwseEquity, ...tikersTpexEquity] };
+  return { tickers: [...tikersTwseEquity, ...tikersTpexEquity] };
 }
 
 async function fetchFullIndex() {
-  const twseIndex = await fetchTickers({ type: "INDEX", exchange: "TWSE" });
+  const twseIndexes = await fetchTickers({ type: "INDEX", exchange: "TWSE" });
   await delay(1000);
-  const tpexIndex = await fetchTickers({ type: "INDEX", exchange: "TPEx" });
+  const tpexIndexes = await fetchTickers({ type: "INDEX", exchange: "TPEx" });
   await delay(1000);
 
-  return { tikers: [twseIndex, tpexIndex] };
+  const tikersTwseIndex = twseIndexes?.data
+    .map((twseIndex) => ({
+      ...twseIndex,
+      date: twseIndexes.date,
+      type: twseIndexes.type,
+      exchange: twseIndexes.exchange,
+    }))
+    .filter((ticker) => ticker.name);
+
+  const tickersTpexIndex = tpexIndexes?.data
+    .map((tpexIndex) => ({
+      ...tpexIndex,
+      date: tpexIndexes.date,
+      type: tpexIndexes.type,
+      exchange: tpexIndexes.exchange,
+    }))
+    .filter((ticker) => ticker.name);
+
+  return { tickers: [...tikersTwseIndex, ...tickersTpexIndex] };
 }
 
 async function fetchFullCandles({ symbol, timeframe }) {
@@ -76,6 +100,7 @@ async function fetchFullCandles({ symbol, timeframe }) {
 
 module.exports = {
   fetchTickers,
+  fetchFullTickers,
   fetchFullEquity,
   fetchFullIndex,
   fetchFullCandles,
