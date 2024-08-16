@@ -1,6 +1,6 @@
 'use client'
 
-import { Stocks } from './home-ui'
+import Stocks from '@/components/ui/stocks/stocks-feature'
 
 const Feature = () => {
     return (
