@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useStockTable } from './stocks-data-access'
 
-export default function () {
+export default function StocksTable() {
     const { isLoading, isError } = useTickers()
     return (
         <>
@@ -12,13 +12,13 @@ export default function () {
             ) : isError ? (
                 <div className="text-white">Error</div>
             ) : (
-                <StocksTable />
+                <StocksTableView />
             )}
         </>
     )
 }
 
-function StocksTable() {
+function StocksTableView() {
     const { data } = useStockTable()
     return (
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

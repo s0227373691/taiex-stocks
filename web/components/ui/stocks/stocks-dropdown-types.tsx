@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StockType, useStockTable } from './stocks-data-access'
 
-export default function () {
+export default function StockDropdownTypes() {
     const [showMenu, setShowMenu] = useState(false)
     const { stockTypes, setStockTypes } = useStockTable()
 
