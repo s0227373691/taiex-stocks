@@ -1,34 +1,26 @@
 import React, { useState } from 'react'
-
-interface DropdownTypesProps {
-    name: string
-    isChecked: boolean
-}
-
-const INIT_TYPES = [
-    { name: 'EQUITY', isChecked: true },
-    { name: 'INDEX', isChecked: true },
-]
+import { StockType, useStockTable } from './stocks-data-access'
 
 export default function () {
     const [showMenu, setShowMenu] = useState(false)
-    const [types, setTypes] = useState<DropdownTypesProps[]>(INIT_TYPES)
+    const { stockTypes, setStockTypes } = useStockTable()
 
     const checkboxHandler = (selectedName: string) => {
-        setTypes((prev) => {
-            const newData = [...prev]
-            for (let i = 0; i < prev.length; i++) {
-                const finded = newData[i].name === selectedName
-                if (finded) {
-                    newData[i] = {
-                        ...newData[i],
-                        isChecked: !newData[i].isChecked,
+        setStockTypes &&
+            setStockTypes((prev) => {
+                const newData = [...prev]
+                for (let i = 0; i < prev.length; i++) {
+                    const finded = newData[i].name === selectedName
+                    if (finded) {
+                        newData[i] = {
+                            ...newData[i],
+                            isChecked: !newData[i].isChecked,
+                        }
+                        break
                     }
-                    break
                 }
-            }
-            return newData
-        })
+                return newData
+            })
     }
 
     const showMenuHandler = () => setShowMenu((prev) => !prev)
@@ -68,7 +60,7 @@ export default function () {
                         className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownBgHoverButton"
                     >
-                        {types.map((type) => (
+                        {stockTypes?.map((type) => (
                             <DropfownTypesItem
                                 key={type.name}
                                 {...type}
@@ -82,7 +74,7 @@ export default function () {
     )
 }
 
-interface DropdownTypesItemProps extends DropdownTypesProps {
+interface DropdownTypesItemProps extends StockType {
     checkboxHandler: (name: string) => void
 }
 
