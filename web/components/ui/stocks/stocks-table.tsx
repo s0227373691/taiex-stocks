@@ -1,7 +1,24 @@
+import { useTickers } from '@/components/data-access'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function ({ data: { data } }: { data: any }) {
+export default function () {
+    const { isLoading, isError } = useTickers()
+    return (
+        <>
+            {isLoading ? (
+                <Loading />
+            ) : isError ? (
+                <div className="text-white">Error</div>
+            ) : (
+                <StocksTable />
+            )}
+        </>
+    )
+}
+
+function StocksTable() {
+    const { data } = useTickers()
     return (
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -22,7 +39,7 @@ export default function ({ data: { data } }: { data: any }) {
                 </tr>
             </thead>
             <tbody className="h-auto">
-                {data?.map((ticker: any) => (
+                {data?.data.map((ticker: any) => (
                     <tr
                         key={ticker._id}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
@@ -41,7 +58,7 @@ export default function ({ data: { data } }: { data: any }) {
     )
 }
 
-export function ButtonStocksMore({ symbol }: { symbol: string }) {
+function ButtonStocksMore({ symbol }: { symbol: string }) {
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleDropdown = () => {
@@ -85,16 +102,39 @@ export function ButtonStocksMore({ symbol }: { symbol: string }) {
                             </Link>
                         </li>
                     </ul>
-                    <div className="py-2">
-                        <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                            Separated link
-                        </a>
-                    </div>
                 </div>
             )}
         </>
+    )
+}
+
+function Loading() {
+    const arrayEmpty = Array.from(new Array(5), () => null)
+    return (
+        <div
+            role="status"
+            className="p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700 w-full"
+        >
+            <div className="flex items-center justify-between">
+                <div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                    <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+            </div>
+            {arrayEmpty.map((el, i) => (
+                <div
+                    key={`${el}` + i}
+                    className="flex items-center justify-between pt-4"
+                >
+                    <div>
+                        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                        <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    </div>
+                    <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                </div>
+            ))}
+            <span className="sr-only">Loading...</span>
+        </div>
     )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 interface DropdownTypesProps {
     name: string
@@ -10,15 +10,36 @@ const INIT_TYPES = [
     { name: 'INDEX', isChecked: true },
 ]
 
-export default function DropdownTypes() {
+export default function () {
+    const [showMenu, setShowMenu] = useState(false)
     const [types, setTypes] = useState<DropdownTypesProps[]>(INIT_TYPES)
+
+    const checkboxHandler = (selectedName: string) => {
+        setTypes((prev) => {
+            const newData = [...prev]
+            for (let i = 0; i < prev.length; i++) {
+                const finded = newData[i].name === selectedName
+                if (finded) {
+                    newData[i] = {
+                        ...newData[i],
+                        isChecked: !newData[i].isChecked,
+                    }
+                    break
+                }
+            }
+            return newData
+        })
+    }
+
+    const showMenuHandler = () => setShowMenu((prev) => !prev)
     return (
         <>
             <button
                 id="dropdownBgHoverButton"
                 data-dropdown-toggle="dropdownBgHover"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="inline-flex items-center text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                 type="button"
+                onClick={showMenuHandler}
             >
                 Type
                 <svg
@@ -38,59 +59,52 @@ export default function DropdownTypes() {
                 </svg>
             </button>
 
-            <div
-                id="dropdownBgHover"
-                className="z-10 w-48 bg-white rounded-lg shadow dark:bg-gray-700"
-            >
-                <ul
-                    className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="dropdownBgHoverButton"
+            {showMenu && (
+                <div
+                    id="dropdownBgHover"
+                    className="z-10 w-48 absolute bg-white rounded-lg shadow border dark:bg-gray-700 dark:border-gray-900 "
                 >
-                    {types.map((type) => (
-                        <li key={type.name}>
-                            <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <input
-                                    id="checkbox-item-4"
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                                    checked={type.isChecked}
-                                    onChange={() => {
-                                        setTypes((prev) => {
-                                            const newData = [...prev]
-                                            for (
-                                                let i = 0;
-                                                i < prev.length;
-                                                i++
-                                            ) {
-                                                const finded =
-                                                    newData[i].name ===
-                                                    type.name
-                                                if (finded) {
-                                                    newData[i] = {
-                                                        ...newData[i],
-                                                        isChecked:
-                                                            !newData[i]
-                                                                .isChecked,
-                                                    }
-                                                    break
-                                                }
-                                            }
-                                            return newData
-                                        })
-                                    }}
-                                />
-                                <label
-                                    htmlFor="checkbox-item-4"
-                                    className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-                                >
-                                    {type.name}
-                                </label>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    <ul
+                        className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownBgHoverButton"
+                    >
+                        {types.map((type) => (
+                            <DropfownTypesItem
+                                key={type.name}
+                                {...type}
+                                checkboxHandler={checkboxHandler}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            )}
         </>
+    )
+}
+
+interface DropdownTypesItemProps extends DropdownTypesProps {
+    checkboxHandler: (name: string) => void
+}
+
+function DropfownTypesItem(props: DropdownTypesItemProps) {
+    return (
+        <li key={props.name}>
+            <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input
+                    id="checkbox-item-4"
+                    type="checkbox"
+                    value=""
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    checked={props.isChecked}
+                    onChange={() => props.checkboxHandler(props.name)}
+                />
+                <label
+                    htmlFor="checkbox-item-4"
+                    className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                >
+                    {props.name}
+                </label>
+            </div>
+        </li>
     )
 }
