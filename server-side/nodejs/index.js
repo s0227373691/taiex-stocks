@@ -8,6 +8,7 @@ require("./src/config/db.config");
 const app = express();
 const PORT = process.env.PORT || 8555;
 
+const statusRoute = require("./src/routes/status.route");
 const constantRoute = require("./src/routes/constant.route");
 const tickersRoute = require("./src/routes/tickers.route");
 const tickerRoute = require("./src/routes/ticker.route");
@@ -32,6 +33,7 @@ app.use(
   })
 );
 
+app.use("/status", statusRoute);
 app.use("/constant", constantRoute);
 app.use("/tickers", tickersRoute);
 app.use("/ticker", tickerRoute);
