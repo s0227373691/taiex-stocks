@@ -1,4 +1,4 @@
-import TokenFeature from '@/components/product/product-feature'
+import ProductFeature from '@/components/product/ProductFeature'
 
-const Page = () => <TokenFeature />
+const Page = () => <ProductFeature />
 export default Page

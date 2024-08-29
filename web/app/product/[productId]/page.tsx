@@ -1,4 +1,5 @@
-import ProductFeature from '@/components/product/product-feature'
+import ProductFeature from '@/components/product/ProductFeature'
 
-const Page = () => <ProductFeature />
-export default Page
+export default function Page() {
+    return <ProductFeature />
+}

@@ -1,4 +1,5 @@
-import HomeFeature from '../components/home/home-feature'
+import HomeFeature from '../components/home/HomeFeature'
 
-const Page = () => <HomeFeature />
-export default Page
+export default function Page() {
+    return <HomeFeature />
+}
