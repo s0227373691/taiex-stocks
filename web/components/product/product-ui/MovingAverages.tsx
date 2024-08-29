@@ -1,4 +1,4 @@
-import { useMA } from '../product-data-access'
+import useMA from '../product-data-access/useMA'
 
 export default function MovingAverages() {
     const { isLoading, indicatorTypes, indicatorTypeState, timeframes, data } =
