@@ -1,4 +1,5 @@
-import { useATHRatio } from '../product-data-access'
+import useATH from '../product-data-access/useATH'
+import useCurrentPrice from '../product-data-access/useCurrentPrice'
 
 interface ATHRatioCardProps {
     id: string | string[]
@@ -44,4 +45,19 @@ export default function ATHRatioCard(props: ATHRatioCardProps) {
             </div>
         </div>
     )
+}
+
+interface useATHRatioParams {
+    id: string
+    timeframe: string
+}
+
+function useATHRatio(props: useATHRatioParams) {
+    const ath = useATH({ id: props.id, timeframe: props.timeframe })
+    const currentPrice = useCurrentPrice({
+        id: props.id,
+        timeframe: props.timeframe,
+    })
+
+    return ath && currentPrice && ((currentPrice / ath) * 100).toFixed(2)
 }

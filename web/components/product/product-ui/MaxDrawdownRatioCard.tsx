@@ -1,5 +1,5 @@
-import { useCurrentPrice } from '../product-data-access'
 import useATHMaxDrawdown from '../product-data-access/useATHMaxDrawdown'
+import useCurrentPrice from '../product-data-access/useCurrentPrice'
 
 interface MaxDrawdownRatioCardProps {
     id: string | string[]
