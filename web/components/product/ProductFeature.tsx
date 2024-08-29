@@ -1,11 +1,12 @@
 'use client'
 
 import React from 'react'
-import { ATHCard, ATHRatioCard } from './product-ui'
+import { ATHCard } from './product-ui'
 import Title from './product-ui/Title'
 import MovingAverages from './product-ui/MovingAverages'
 import MaxDrawdownRatioCard from './product-ui/MaxDrawdownRatioCard'
 import MaxDrawdownCard from './product-ui/MaxDrawdownCard'
+import ATHRatioCard from './product-ui/ATHRatioCard'
 import { useParams } from 'next/navigation'
 
 export default function ProductFeature() {

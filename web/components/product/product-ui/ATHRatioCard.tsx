@@ -1,29 +1,16 @@
-'use client'
+import { useATHRatio } from '../product-data-access'
 
-import { useATH, useATHRatio } from './product-data-access'
-import React, { useMemo } from 'react'
-
-export function ATH({ id, timeframe }: { id: string; timeframe: string }) {
-    const ath = useATH({ id, timeframe })
-    const athRatio = useATHRatio({ id, timeframe })
-    return (
-        <div>
-            ath: {ath}, athRatio: {athRatio} {athRatio && '%'}{' '}
-        </div>
-    )
-}
-
-interface ATHCardProps {
+interface ATHRatioCardProps {
     id: string | string[]
     timeframe: string
 }
 
-export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
-    const idString = Array.isArray(id) ? id.join(',') : id
+export default function ATHRatioCard(props: ATHRatioCardProps) {
+    const id = Array.isArray(props.id) ? props.id.join(',') : props.id
+    const athRatio = useATHRatio({ id, timeframe: props.timeframe })
 
-    const ath = useATH({ id: idString, timeframe })
     return (
-        <div className="relative flex flex-col bg-clip-border rounded-xl  bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
+        <div className="relative flex flex-col bg-clip-border rounded-xl bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +30,10 @@ export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
             </div>
             <div className="p-4 text-right">
                 <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                    ATH Price
+                    ATH Ratio
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                    ${ath}
+                    {athRatio}%
                 </h4>
             </div>
             <div className="border-t border-blue-gray-50 p-4">
