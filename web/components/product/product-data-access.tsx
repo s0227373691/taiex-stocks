@@ -38,28 +38,3 @@ export function useATHRatio({
         }
     }, [ath])
 }
-
-export function useATHMaxDrawdown({
-    id,
-    timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
-    const { data: allHistorical } = useHistorical({ id, timeframe })
-    const ath = useATH({ id, timeframe })
-    return useMemo(() => {
-        if (ath) {
-            const candles = allHistorical.data[0]?.candles
-            let i = candles.length - 1
-            let _maxDrawdown = ath
-
-            while (ath !== candles[i].high) {
-                const { low } = candles[i]
-                if (_maxDrawdown > low) _maxDrawdown = low
-                i--
-            }
-            return _maxDrawdown
-        }
-    }, [ath])
-}

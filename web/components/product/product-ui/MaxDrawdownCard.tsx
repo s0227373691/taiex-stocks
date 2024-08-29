@@ -1,4 +1,4 @@
-import { useATHMaxDrawdown } from '../product-data-access'
+import useATHMaxDrawdown from '../product-data-access/useATHMaxDrawdown'
 
 interface MaxDrawdownCardProps {
     id: string | string[]

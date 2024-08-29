@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { useATHMaxDrawdown, useCurrentPrice } from '../product-data-access'
+import { useCurrentPrice } from '../product-data-access'
+import useATHMaxDrawdown from '../product-data-access/useATHMaxDrawdown'
 
 interface MaxDrawdownRatioCardProps {
     id: string | string[]
@@ -10,11 +10,10 @@ export default function MaxDrawdownRatioCard(props: MaxDrawdownRatioCardProps) {
     const id = Array.isArray(props.id) ? props.id.join(',') : props.id
     const maxDrawdown = useATHMaxDrawdown({ id, timeframe: props.timeframe })
     const currentPrice = useCurrentPrice({ id, timeframe: props.timeframe })
-    const ratio = useMemo(() => {
-        if (currentPrice && maxDrawdown) {
-            return ((currentPrice / maxDrawdown - 1) * 100).toFixed(2)
-        }
-    }, [maxDrawdown, currentPrice])
+    const ratio =
+        currentPrice &&
+        maxDrawdown &&
+        ((currentPrice / maxDrawdown - 1) * 100).toFixed(2)
 
     return (
         <div className="relative flex flex-col bg-clip-border rounded-xl bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
