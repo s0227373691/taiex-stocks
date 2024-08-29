@@ -1,27 +1,14 @@
-'use client'
-
-import { useATH, useATHRatio } from './product-data-access'
-import React, { useMemo } from 'react'
-
-export function ATH({ id, timeframe }: { id: string; timeframe: string }) {
-    const ath = useATH({ id, timeframe })
-    const athRatio = useATHRatio({ id, timeframe })
-    return (
-        <div>
-            ath: {ath}, athRatio: {athRatio} {athRatio && '%'}{' '}
-        </div>
-    )
-}
+import { useATH } from '../product-data-access'
 
 interface ATHCardProps {
     id: string | string[]
     timeframe: string
 }
 
-export const ATHCard: React.FC<ATHCardProps> = ({ id, timeframe }) => {
-    const idString = Array.isArray(id) ? id.join(',') : id
+export default function ATHCard(props: ATHCardProps) {
+    const id = Array.isArray(props.id) ? props.id.join(',') : props.id
+    const ath = useATH({ id, timeframe: props.timeframe })
 
-    const ath = useATH({ id: idString, timeframe })
     return (
         <div className="relative flex flex-col bg-clip-border rounded-xl  bg-gray-400 text-gray-700 border border-blue-gray-100 shadow-sm">
             <div className="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
