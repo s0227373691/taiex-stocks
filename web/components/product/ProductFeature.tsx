@@ -6,9 +6,9 @@ import {
     ATHRatioCard,
     MaxDrawdownCard,
     MaxDrawdownRatioCard,
-    MovingAverages,
 } from './product-ui'
 import Title from './product-ui/Title'
+import MovingAverages from './product-ui/MovingAverages'
 import { useParams } from 'next/navigation'
 
 export default function ProductFeature() {
