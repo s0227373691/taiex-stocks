@@ -1,4 +1,5 @@
-import { useProductInfo } from '../product-data-access'
+import { useTickers } from '@/components/data-access'
+import { useMemo } from 'react'
 
 interface TitleProps {
     id: string | string[]
@@ -12,4 +13,9 @@ export default function Title(props: TitleProps) {
             {productInfo?.symbol} {productInfo?.name}
         </div>
     )
+}
+
+function useProductInfo(id: string | string[]) {
+    const { data } = useTickers()
+    return useMemo(() => data?.data.find((el: any) => el.symbol === id), [data])
 }

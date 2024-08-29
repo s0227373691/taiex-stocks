@@ -2,22 +2,7 @@
 
 import { useMemo } from 'react'
 import { useHistorical, useTickers } from '../data-access'
-
-export function useATH({ id, timeframe }: { id: string; timeframe: string }) {
-    const { data: allHistorical } = useHistorical({ id, timeframe })
-    return useMemo(() => {
-        if (allHistorical) {
-            let _ath = 0
-            let i = 0
-            while (allHistorical.data[0]?.candles.length > i) {
-                const { high } = allHistorical.data[0]?.candles[i]
-                if (high > _ath) _ath = high
-                i++
-            }
-            return _ath
-        }
-    }, [allHistorical])
-}
+import useATH from './product-data-access/useATH'
 
 export function useCurrentPrice({
     id,
@@ -77,9 +62,4 @@ export function useATHMaxDrawdown({
             return _maxDrawdown
         }
     }, [ath])
-}
-
-export function useProductInfo(id: string | string[]) {
-    const { data } = useTickers()
-    return useMemo(() => data?.data.find((el: any) => el.symbol === id), [data])
 }

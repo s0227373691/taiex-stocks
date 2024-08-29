@@ -1,4 +1,4 @@
-import { useATH } from '../product-data-access'
+import useATH from '../product-data-access/useATH'
 
 interface ATHCardProps {
     id: string | string[]
