@@ -7,8 +7,8 @@ import {
     MaxDrawdownCard,
     MaxDrawdownRatioCard,
     MovingAverages,
-    Title,
 } from './product-ui'
+import Title from './product-ui/Title'
 import { useParams } from 'next/navigation'
 
 export default function ProductFeature() {

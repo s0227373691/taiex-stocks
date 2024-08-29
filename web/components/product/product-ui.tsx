@@ -6,7 +6,6 @@ import {
     useATHRatio,
     useCurrentPrice,
     useMA,
-    useProductInfo,
 } from './product-data-access'
 import React, { useMemo } from 'react'
 
@@ -16,20 +15,6 @@ export function ATH({ id, timeframe }: { id: string; timeframe: string }) {
     return (
         <div>
             ath: {ath}, athRatio: {athRatio} {athRatio && '%'}{' '}
-        </div>
-    )
-}
-
-interface TitleProps {
-    id: string | string[]
-}
-
-export const Title: React.FC<TitleProps> = ({ id }) => {
-    const productInfo = useProductInfo(id)
-
-    return (
-        <div className="p-4 text-2xl">
-            {productInfo?.symbol} {productInfo?.name}
         </div>
     )
 }
