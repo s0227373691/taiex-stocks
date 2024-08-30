@@ -13,7 +13,7 @@ export default function ProductFeature() {
     return (
         <div className="w-full h-full flex">
             <div className="w-full">
-                <Title id={productId} />
+                <Title id={id} />
                 <PerformanceMetricsOverview id={id} timeframe={'M'} />
                 <MovingAverages />
             </div>

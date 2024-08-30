@@ -2,7 +2,7 @@ import { useTickers } from '@/components/data-access'
 import { useMemo } from 'react'
 
 interface TitleProps {
-    id: string | string[]
+    id: string
 }
 
 export default function Title(props: TitleProps) {
