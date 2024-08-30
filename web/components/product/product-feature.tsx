@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Title from './product-ui/Title'
-import MovingAverages from './product-ui/MovingAverages'
+// import MovingAverages from './product-ui/MovingAverages'
 import { useParams } from 'next/navigation'
 import PerformanceMetricsOverview from './product-ui/PerformanceMetricsOverview'
 
@@ -15,7 +15,7 @@ export default function ProductFeature() {
             <div className="w-full">
                 <Title id={id} />
                 <PerformanceMetricsOverview id={id} timeframe={'M'} />
-                <MovingAverages />
+                {/* <MovingAverages /> */}
             </div>
         </div>
     )
