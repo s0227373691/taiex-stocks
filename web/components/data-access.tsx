@@ -1,6 +1,6 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { getTickers, fetchHistorical } from '@/config/finance'
 
 export function useTickers() {
@@ -10,15 +10,17 @@ export function useTickers() {
     })
 }
 
+interface useHistoricalParams {
+    id: string
+    timeframe: string
+}
+
 export function useHistorical({
     id,
     timeframe,
-}: {
-    id: string
-    timeframe: string
-}) {
+}: useHistoricalParams): UseQueryResult<any, Error> {
     return useQuery({
-        queryKey: ['allHistorical', id, timeframe],
+        queryKey: ['historical', id, timeframe],
         queryFn: () => fetchHistorical(id, timeframe),
     })
 }

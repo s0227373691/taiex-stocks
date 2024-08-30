@@ -4,6 +4,7 @@ import useATHRatio from '../product-data-access/useATHRatio'
 import useATHMaxDrawdown from '../product-data-access/useATHMaxDrawdown'
 import useATHMaxDrawdownRatio from '../product-data-access/useATHMaxDrawdownRatio'
 import { useHistoricalCount } from '@/components/hooks/service'
+import useDaysSinceATH from '../product-data-access/useDaysSinceATH'
 
 interface Tab {
     id: string
@@ -108,6 +109,7 @@ function TabPanelStat(props: TabPanelStatProps) {
     const maxDrawdown = useATHMaxDrawdown(productParam)
     const maxDrawdownRatio = useATHMaxDrawdownRatio(productParam)
     const { data: historicalCountData } = useHistoricalCount(props.id)
+    const daysSinceATH = useDaysSinceATH({ id: props.id })
 
     return (
         <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800">
@@ -131,7 +133,10 @@ function TabPanelStat(props: TabPanelStatProps) {
                     label="Distance to maxDrawdown ratio"
                     value={maxDrawdownRatio ? `${maxDrawdownRatio}%` : null}
                 />
-                <StatItem label="Organizations" value="4M+" />
+                <StatItem
+                    label="Since ATH"
+                    value={daysSinceATH ? `${daysSinceATH} D` : null}
+                />
             </dl>
         </div>
     )
