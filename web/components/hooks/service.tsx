@@ -1,5 +1,6 @@
-import { fetchHistoricalCount, fetchServerStatus } from '@/config/finance'
+import { fetchServerStatus } from '@/config/finance'
 import { useQuery } from '@tanstack/react-query'
+import historicalService from '@/services/historical'
 
 export function useGetServerStatus() {
     return useQuery({
@@ -11,6 +12,6 @@ export function useGetServerStatus() {
 export function useHistoricalCount(symbol: string) {
     return useQuery({
         queryKey: ['historicalCount', symbol],
-        queryFn: () => fetchHistoricalCount(symbol),
+        queryFn: () => historicalService.getStockCount(symbol),
     })
 }

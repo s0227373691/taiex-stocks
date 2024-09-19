@@ -1,17 +1,16 @@
 'use client'
 
 import { useQueries, useQuery } from '@tanstack/react-query'
-import { fetchHistoricalCrypto, fetchPerp } from '@/config/finance'
-import { useEffect, useMemo, useState } from 'react'
-import { useEMAs } from '../hooks/hooks'
+import { fetchPerp } from '@/config/finance'
+import { useMemo, useState } from 'react'
 import { EMA } from 'technicalindicators'
-import { calcEMAs } from '@/utils'
+import historicalService from '@/services/historical'
 
 export function useHistoricalCrypto(symbol: string, timeframe: string) {
     const exchange = 'Binance'
     return useQuery({
         queryKey: ['historical', 'crypto', exchange, symbol, timeframe],
-        queryFn: () => fetchHistoricalCrypto(exchange, symbol, timeframe),
+        queryFn: () => historicalService.getCrypto(exchange, symbol, timeframe),
     })
 }
 export function useHistoricalCryptos(_market: any) {
@@ -30,7 +29,11 @@ export function useHistoricalCryptos(_market: any) {
                         timeframe,
                     ],
                     queryFn: () =>
-                        fetchHistoricalCrypto(exchange, symbol, timeframe),
+                        historicalService.getCrypto(
+                            exchange,
+                            symbol,
+                            timeframe
+                        ),
                 }
             }
         ),
