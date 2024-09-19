@@ -1,13 +1,14 @@
 import { createServerURL } from '@/config/finance'
+import { NEXT_PUBLIC_URL } from '@/lib/constant'
 
+const base = new URL('/tickers', NEXT_PUBLIC_URL)
 export default {
     get,
     update,
 }
 
 export async function get() {
-    const url = createServerURL()
-    url.pathname = '/tickers'
+    const url = new URL(base)
 
     const response = await fetch(url)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -17,8 +18,8 @@ export async function get() {
 }
 
 export async function update() {
-    const url = createServerURL()
-    url.pathname = `/tickers/sync`
+    const url = new URL('/sync', base)
+    // url.pathname = `/tickers/sync`
 
     const response = await fetch(url, {
         method: 'POST',
