@@ -1,10 +1,10 @@
 'use client'
 
 import { useQueries, useQuery } from '@tanstack/react-query'
-import { fetchPerp } from '@/config/finance'
 import { useMemo, useState } from 'react'
 import { EMA } from 'technicalindicators'
 import historicalService from '@/services/historical'
+import marketService from '@/services/market'
 
 export function useHistoricalCrypto(symbol: string, timeframe: string) {
     const exchange = 'Binance'
@@ -53,7 +53,7 @@ export function usePerpMarket() {
     const exchange = 'Binance'
     return useQuery({
         queryKey: ['perpmarket', exchange],
-        queryFn: () => fetchPerp(),
+        queryFn: () => marketService.getPerp(),
     })
 }
 

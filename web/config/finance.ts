@@ -4,16 +4,3 @@ export const createServerURL = () => {
         (urlStr += `:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`)
     return new URL(urlStr)
 }
-
-export async function fetchPerp() {
-    try {
-        const url = createServerURL()
-        url.pathname = `/market`
-
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-    } catch (error) {
-        console.error(error)
-    }
-}
