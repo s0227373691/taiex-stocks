@@ -4,6 +4,7 @@ main().catch((err) => console.log(err));
 
 async function main() {
   try {
+    console.log(`environment: ${process.env.NODE_ENV}`)
     console.log("connecting mongoDB ...");
 
     let uri;
