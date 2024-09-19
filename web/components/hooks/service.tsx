@@ -1,11 +1,11 @@
-import { fetchServerStatus } from '@/config/finance'
 import { useQuery } from '@tanstack/react-query'
 import historicalService from '@/services/historical'
+import serverService from '@/services/server'
 
 export function useGetServerStatus() {
     return useQuery({
         queryKey: ['tickers'],
-        queryFn: () => fetchServerStatus(),
+        queryFn: () => serverService.getStatus(),
     })
 }
 
