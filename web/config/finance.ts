@@ -1,6 +1,7 @@
-const createServerURL = () =>{
+export const createServerURL = () => {
     let urlStr = `${process.env.NEXT_PUBLIC_API_SERVER_protocal}//${process.env.NEXT_PUBLIC_API_SERVER_HOST}`
-    process.env.NEXT_PUBLIC_API_SERVER_PORT && (urlStr+=`:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`)
+    process.env.NEXT_PUBLIC_API_SERVER_PORT &&
+        (urlStr += `:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`)
     return new URL(urlStr)
 }
 
@@ -87,43 +88,13 @@ export async function fetchHistoricalCount(symbol: string) {
     return json
 }
 
-export async function getTickers(){
-    const url = createServerURL()
-    url.pathname = '/tickers'
-
-    const response = await fetch(url)
-    if(!response.ok) throw new Error(`Response status: ${response.status}`);
-
-
-    const json = await response.json();
-    return json
-}
-
-export async function updateTickers(){
-    const url = createServerURL()
-    url.pathname = `/tickers/sync`
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to update tickers');
-    }
-  
-    return response.json();
-  };
-
-  export async function fetchServerStatus() {
+export async function fetchServerStatus() {
     const url = createServerURL()
     url.pathname = '/status'
 
     const response = await fetch(url)
-    if(!response.ok) throw new Error(`Response status: ${response.status}`);
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-    const json = await response.json();
+    const json = await response.json()
     return json
-  }
+}

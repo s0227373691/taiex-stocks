@@ -1,12 +1,13 @@
 'use client'
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
-import { getTickers, fetchHistorical } from '@/config/finance'
+import { fetchHistorical } from '@/config/finance'
+import tickerService from '@/services/ticker'
 
 export function useTickers() {
     return useQuery({
         queryKey: ['tickers'],
-        queryFn: () => getTickers(),
+        queryFn: () => tickerService.get(),
     })
 }
 

@@ -1,8 +1,8 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { updateTickers } from '@/config/finance'
+import tickerService from '@/services/ticker'
 
 export function useTickers() {
-    return useMutation({ mutationFn: updateTickers })
+    return useMutation({ mutationFn: tickerService.update })
 }
