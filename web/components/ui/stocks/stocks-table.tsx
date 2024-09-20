@@ -19,7 +19,6 @@ export default function StocksTable() {
 }
 
 function StocksTableView() {
-    const { data } = useStockTable()
     return (
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -36,42 +35,61 @@ function StocksTableView() {
                     <th scope="col" className="px-6 py-3">
                         Type
                     </th>
-                    <th scope="col" className="px-6 py-3"></th>
                 </tr>
             </thead>
-            <tbody className="h-auto">
-                {data.map((ticker: any) => (
-                    <tr
-                        key={ticker._id}
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
-                    >
-                        <td className="px-6 py-4">{ticker.name}</td>
-                        <td className="px-6 py-4"> {ticker.symbol}</td>
-                        <td className="px-6 py-4">{ticker.market}</td>
-                        <td className="px-6 py-4">{ticker.type}</td>
-                        <td className="px-6 py-4">
-                            <ButtonStocksMore {...ticker} />
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
+            <StocksTableBodyView />
         </table>
     )
 }
 
-function ButtonStocksMore({ symbol }: { symbol: string }) {
-    const [isOpen, setIsOpen] = useState(false)
+function StocksTableBodyView({}) {
+    const { data } = useStockTable()
+    const [clickedSymbol, setclickedSymbol] = useState<string>('')
+    return (
+        <tbody className="h-auto">
+            {data.map((ticker: any) => (
+                <tr
+                    key={ticker._id}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+                >
+                    <td className="px-6 py-4">{ticker.name}</td>
+                    <td className="px-6 py-4"> {ticker.symbol}</td>
+                    <td className="px-6 py-4">{ticker.type}</td>
+                    <td className="px-6 py-4">
+                        <ButtonStocksMore
+                            {...ticker}
+                            clickedSymbol={clickedSymbol}
+                            setclickedSymbol={setclickedSymbol}
+                        />
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    )
+}
 
+interface ButtonStocksMoreProps {
+    symbol: string
+    clickedSymbol: string
+    setclickedSymbol: React.Dispatch<React.SetStateAction<string>>
+}
+
+function ButtonStocksMore(props: ButtonStocksMoreProps) {
+    const isOpen = props.symbol === props.clickedSymbol
     const toggleDropdown = () => {
-        setIsOpen(!isOpen)
+        if (props.clickedSymbol === '')
+            return props.setclickedSymbol(props.symbol)
+
+        if (isOpen) return props.setclickedSymbol('')
+        else return props.setclickedSymbol(props.symbol)
     }
 
     return (
         <>
             <button
                 onClick={toggleDropdown}
-                id={`dropdownMenuIconButton_${symbol}`}
-                data-dropdown-toggle={`dropdownDots_${symbol}`}
+                id={`dropdownMenuIconButton_${props.symbol}`}
+                data-dropdown-toggle={`dropdownDots_${props.symbol}`}
                 className="flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 type="button"
             >
@@ -87,16 +105,16 @@ function ButtonStocksMore({ symbol }: { symbol: string }) {
             </button>
             {isOpen && (
                 <div
-                    id={`dropdownDots_${symbol}`}
+                    id={`dropdownDots_${props.symbol}`}
                     className={`z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute`}
                 >
                     <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby={`dropdownMenuIconButton_${symbol}`}
+                        aria-labelledby={`dropdownMenuIconButton_${props.symbol}`}
                     >
                         <li>
                             <Link
-                                href={`/product/${symbol}`}
+                                href={`/product/${props.symbol}`}
                                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                             >
                                 Dashboard
