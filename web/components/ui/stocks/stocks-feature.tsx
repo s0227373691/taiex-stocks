@@ -1,17 +1,19 @@
 'use client'
 
+import StocksFeatureContainer from './stocks-feature-container'
 import StocksTable from './stocks-table'
-import { ConditionalFilter, StocksSummary } from './stocks-ui'
+import ConditionalFilter from './conditional-filter'
 import StockTableProviders from './stock-table-providers'
+import StocksSummary from './stocks-summary'
 
 export default function StocksFeature() {
     return (
         <StockTableProviders>
-            <div className="relative shadow-md sm:rounded-lg w-[740px] m-auto mt-12">
+            <StocksFeatureContainer>
                 <StocksSummary />
                 <ConditionalFilter />
                 <StocksTable />
-            </div>
+            </StocksFeatureContainer>
         </StockTableProviders>
     )
 }
