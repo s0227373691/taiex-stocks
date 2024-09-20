@@ -1,5 +1,6 @@
 import StocksDropdownTypes from './stocks-dropdown-types'
 import { useStockTable } from './stocks-data-access'
+import StocksSearchInput from './stocks-search-input'
 
 export function StocksSummary() {
     const { data } = useStockTable()
@@ -17,8 +18,9 @@ export function StocksSummary() {
 
 export function ConditionalFilter() {
     return (
-        <div>
+        <div className="flex justify-between mb-3">
             <StocksDropdownTypes />
+            <StocksSearchInput />
         </div>
     )
 }
