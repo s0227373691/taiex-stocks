@@ -2,6 +2,7 @@ import { NEXT_PUBLIC_URL } from '@/lib/constant'
 
 const base = NEXT_PUBLIC_URL
 const route = '/tickers'
+
 export default {
     get,
     update,
@@ -9,7 +10,6 @@ export default {
 
 export async function get() {
     const url = new URL(`${route}`, base)
-
     const response = await fetch(url)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
@@ -19,7 +19,6 @@ export async function get() {
 
 export async function update() {
     const url = new URL(`${route}/sync`, base)
-
     const response = await fetch(url, {
         method: 'POST',
         headers: {

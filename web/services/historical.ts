@@ -1,5 +1,7 @@
-import { createServerURL } from '@/config/finance'
+import { NEXT_PUBLIC_URL } from '@/lib/constant'
 
+const base = NEXT_PUBLIC_URL
+const route = '/historical'
 export default {
     getStock,
     getCrypto,
@@ -9,8 +11,7 @@ export default {
 
 export async function getStock(symbol: string, timeframe: string) {
     try {
-        const url = createServerURL()
-        url.pathname = '/historical'
+        const url = new URL(`${route}`, base)
         url.searchParams.append('symbol', symbol)
         url.searchParams.append('timeframe', timeframe)
 
@@ -24,9 +25,7 @@ export async function getStock(symbol: string, timeframe: string) {
 
 export async function sync(symbol: string, timeframe: string) {
     try {
-        const url = createServerURL()
-        url.pathname = '/historical/sync'
-
+        const url = new URL(`${route}/sync`, base)
         const data = {
             symbol,
             timeframe,
@@ -54,8 +53,7 @@ export async function getCrypto(
     timeframe: string
 ) {
     try {
-        const url = createServerURL()
-        url.pathname = `/historical/crypto/${exchange}`
+        const url = new URL(`${route}/crypto/${exchange}`, base)
         url.searchParams.append('symbol', symbol)
         url.searchParams.append('timeframe', timeframe)
 
@@ -68,8 +66,7 @@ export async function getCrypto(
 }
 
 export async function getStockCount(symbol: string) {
-    const url = createServerURL()
-    url.pathname = `/historical/candle/count`
+    const url = new URL(`${route}/candle/count`, base)
     url.searchParams.append('symbol', symbol)
 
     const response = await fetch(url)
