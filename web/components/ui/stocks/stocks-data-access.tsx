@@ -2,11 +2,9 @@ import { useTickers } from '@/components/data-access'
 import {
     createContext,
     Dispatch,
-    ReactNode,
     SetStateAction,
     useContext,
     useMemo,
-    useState,
 } from 'react'
 
 export type StockType = {
@@ -14,38 +12,14 @@ export type StockType = {
     isChecked: boolean
 }
 
-function useStockTypesState() {
-    return useState([
-        { name: 'EQUITY', isChecked: true },
-        { name: 'INDEX', isChecked: true },
-    ])
-}
-
 type StockTypeContextType = {
     stockTypes: StockType[]
     setStockTypes: Dispatch<SetStateAction<StockType[]>>
 }
 
-const StockTypesContext = createContext<StockTypeContextType | null>(null)
-
-interface StocksTableProvidersProps {
-    children: ReactNode
-}
-
-export function StockTableProviders(props: StocksTableProvidersProps) {
-    const [stockTypes, setStockTypes] = useStockTypesState()
-
-    return (
-        <StockTypesContext.Provider
-            value={{
-                stockTypes,
-                setStockTypes,
-            }}
-        >
-            {props.children}
-        </StockTypesContext.Provider>
-    )
-}
+export const StockTypesContext = createContext<StockTypeContextType | null>(
+    null
+)
 
 export const useStockTable = () => {
     const { data } = useTickers()

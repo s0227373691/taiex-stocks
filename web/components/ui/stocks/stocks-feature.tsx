@@ -1,8 +1,8 @@
 'use client'
 
-import { StockTableProviders } from './stocks-data-access'
 import StocksTable from './stocks-table'
 import { ConditionalFilter, StocksSummary } from './stocks-ui'
+import StockTableProviders from './stock-table-providers'
 
 export default function StocksFeature() {
     return (
