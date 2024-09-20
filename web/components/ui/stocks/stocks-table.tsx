@@ -1,6 +1,6 @@
 import { useTickers } from '@/components/data-access'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useStockTable } from './stocks-data-access'
 
 export default function StocksTable() {
@@ -45,8 +45,23 @@ function StocksTableView() {
 function StocksTableBodyView({}) {
     const { data } = useStockTable()
     const [clickedSymbol, setclickedSymbol] = useState<string>('')
+    const tableBodyRef = useRef<HTMLTableSectionElement>(null)
+
+    const handleClickOutside = (event: MouseEvent) => {
+        const isClickInside = tableBodyRef.current?.contains(
+            event.target as Node
+        )
+        if (!isClickInside) return setclickedSymbol('')
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
     return (
-        <tbody className="h-auto">
+        <tbody className="h-auto" ref={tableBodyRef}>
             {data.map((ticker: any) => (
                 <tr
                     key={ticker._id}
