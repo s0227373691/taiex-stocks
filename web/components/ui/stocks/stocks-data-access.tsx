@@ -21,14 +21,22 @@ export const StockTypesContext = createContext<StockTypeContextType | null>(
     null
 )
 
+export const useStockTableContext = () => {
+    const context = useContext(StockTypesContext)
+    if (!context)
+        throw new Error(
+            'useStockTableContext should be used within the scope of StockTable component'
+        )
+    return context
+}
+
 export const useStockTable = () => {
     const { data } = useTickers()
-    const stockTypesContext = useContext(StockTypesContext)
+    const stockTypesContext = useStockTableContext()
+    const { stockTypes } = stockTypesContext
     const computeData = useMemo(() => {
-        if (!data || !stockTypesContext) return data
+        if (!data) return []
         const tickerData = data.data
-        const { stockTypes } = stockTypesContext
-
         const isStockTypesAllChecked = stockTypes.every((el) => el.isChecked)
         if (isStockTypesAllChecked) return tickerData
 
@@ -39,7 +47,7 @@ export const useStockTable = () => {
         return tickerData.filter((el: any) =>
             checkedStockTypes.includes(el.type)
         )
-    }, [data, stockTypesContext?.stockTypes])
+    }, [data, stockTypes])
 
     return { data: computeData, ...stockTypesContext }
 }
