@@ -1,21 +1,5 @@
-import { useTickers } from '@/components/data-access'
-import {
-    createContext,
-    Dispatch,
-    SetStateAction,
-    useContext,
-    useMemo,
-} from 'react'
-
-export type StockType = {
-    name: string
-    isChecked: boolean
-}
-
-type StockTypeContextType = {
-    stockTypes: StockType[]
-    setStockTypes: Dispatch<SetStateAction<StockType[]>>
-}
+import { createContext, useContext, useMemo } from 'react'
+import { StockTypeContextType } from './stock-table-providers'
 
 export const StockTypesContext = createContext<StockTypeContextType | null>(
     null
@@ -31,23 +15,19 @@ export const useStockTableContext = () => {
 }
 
 export const useStockTable = () => {
-    const { data } = useTickers()
+    const { tickers } = useStockTableContext()
     const stockTypesContext = useStockTableContext()
     const { stockTypes } = stockTypesContext
     const computeData = useMemo(() => {
-        if (!data) return []
-        const tickerData = data.data
         const isStockTypesAllChecked = stockTypes.every((el) => el.isChecked)
-        if (isStockTypesAllChecked) return tickerData
+        if (isStockTypesAllChecked) return tickers
 
         const checkedStockTypes = stockTypes
             .filter((el) => el.isChecked)
             .map((el) => el.name)
 
-        return tickerData.filter((el: any) =>
-            checkedStockTypes.includes(el.type)
-        )
-    }, [data, stockTypes])
+        return tickers.filter((el: any) => checkedStockTypes.includes(el.type))
+    }, [tickers, stockTypes])
 
     return { data: computeData, ...stockTypesContext }
 }

@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { StockType, useStockTable } from './stocks-data-access'
+import { useStockTable } from './stocks-data-access'
+import { StockType } from './stock-table-providers'
 
 export default function StockDropdownTypes() {
     const [showMenu, setShowMenu] = useState(false)

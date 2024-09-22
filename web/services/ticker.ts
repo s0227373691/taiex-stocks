@@ -3,6 +3,16 @@ import { NEXT_PUBLIC_URL } from '@/lib/constant'
 const base = NEXT_PUBLIC_URL
 const route = '/tickers'
 
+export type tickerType = {
+    _id: string
+    name: string
+    symbol: string
+    __v: number
+    historicals: any[]
+    type: string
+    updateTime: string
+}
+
 export default {
     get,
     update,

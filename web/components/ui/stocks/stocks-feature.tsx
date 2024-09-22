@@ -1,14 +1,14 @@
-'use client'
-
 import StocksFeatureContainer from './stocks-feature-container'
 import StocksTable from './stocks-table'
 import ConditionalFilter from './conditional-filter'
 import StockTableProviders from './stock-table-providers'
 import StocksSummary from './stocks-summary'
+import tickerService from '@/services/ticker'
 
-export default function StocksFeature() {
+const StocksFeature = async () => {
+    const res = await tickerService.get()
     return (
-        <StockTableProviders>
+        <StockTableProviders initialTickers={res?.data}>
             <StocksFeatureContainer>
                 <StocksSummary />
                 <ConditionalFilter />
@@ -17,3 +17,5 @@ export default function StocksFeature() {
         </StockTableProviders>
     )
 }
+
+export default StocksFeature
