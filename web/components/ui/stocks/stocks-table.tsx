@@ -1,3 +1,5 @@
+'use client'
+
 import { useTickers } from '@/components/data-access'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'

@@ -1,5 +1,3 @@
-'use client'
-
 import Stocks from '@/components/ui/stocks/stocks-feature'
 
 export default function HomeFeature() {
