@@ -22,10 +22,8 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ReactQueryProvider>
                     <NavBar />
-                    <div className="flex">
-                        <div className="flex w-full min-h-screen">
-                            {children}
-                        </div>
+                    <div className="flex w-full min-h-screen bg-white dark:bg-gray-900">
+                        {children}
                     </div>
                 </ReactQueryProvider>
             </body>
