@@ -32,7 +32,7 @@ export default function StockDropdownTypes() {
             <button
                 id="dropdownBgHoverButton"
                 data-dropdown-toggle="dropdownBgHover"
-                className="inline-flex items-center text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+                className="inline-flex items-center text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-800 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                 type="button"
                 onClick={showMenuHandler}
             >
@@ -57,7 +57,7 @@ export default function StockDropdownTypes() {
             {showMenu && (
                 <div
                     id="dropdownBgHover"
-                    className="z-10 w-48 absolute bg-white rounded-lg shadow border dark:bg-gray-700 dark:border-gray-900 "
+                    className="z-10 w-48 absolute bg-white rounded-lg shadow border border-gray-300 dark:bg-gray-700 dark:border-gray-900 "
                 >
                     <ul
                         className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
