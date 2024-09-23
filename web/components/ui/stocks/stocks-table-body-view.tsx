@@ -6,6 +6,7 @@ import ButtonStocksMore from './button-stocks-more'
 
 const StocksTableBodyView = () => {
     const { data } = useStockTable()
+    data.length = 5
     const [clickedSymbol, setclickedSymbol] = useState<string>('')
     const tableBodyRef = useRef<HTMLTableSectionElement>(null)
 

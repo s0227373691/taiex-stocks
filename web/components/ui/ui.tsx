@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ThemeModeButton from './theme-mode-button'
 
 export function NavBar() {
     return (
@@ -81,6 +82,7 @@ export function NavBar() {
                         </li>
                     </ul>
                 </div>
+                <ThemeModeButton />
             </div>
         </nav>
     )

@@ -23,7 +23,9 @@ export default function RootLayout({
                 <ReactQueryProvider>
                     <NavBar />
                     <div className="flex">
-                        <div className="flex w-full h-screen">{children}</div>
+                        <div className="flex w-full min-h-screen">
+                            {children}
+                        </div>
                     </div>
                 </ReactQueryProvider>
             </body>
