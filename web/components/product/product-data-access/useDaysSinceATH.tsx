@@ -11,7 +11,7 @@ export default function useDaysSinceATH(props: useDaysSinceATHParams) {
         timeframe: 'D',
     })
     return useMemo(() => {
-        if (historicalData) {
+        if (historicalData?.data[0]) {
             let athPrice = 0
             let days = 0
 
@@ -25,5 +25,6 @@ export default function useDaysSinceATH(props: useDaysSinceATHParams) {
             })
             return days
         }
+        return null
     }, [historicalData])
 }
