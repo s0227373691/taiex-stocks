@@ -4,10 +4,21 @@ import React, { useState } from 'react'
 import { useStockTable } from './stocks-data-access'
 import { StockType } from './stock-table-providers'
 
-export default function StockDropdownTypes() {
+const StockDropdownTypes = () => {
     const [showMenu, setShowMenu] = useState(false)
-    const { stockTypes, setStockTypes } = useStockTable()
+    const showMenuHandler = () => setShowMenu((prev) => !prev)
+    return (
+        <div>
+            <ToggleMenuButton onClick={showMenuHandler} />
+            {showMenu && <DropfownTypes />}
+        </div>
+    )
+}
 
+export default StockDropdownTypes
+
+function DropfownTypes() {
+    const { stockTypes, setStockTypes } = useStockTable()
     const checkboxHandler = (selectedName: string) => {
         setStockTypes &&
             setStockTypes((prev) => {
@@ -25,55 +36,26 @@ export default function StockDropdownTypes() {
                 return newData
             })
     }
-
-    const showMenuHandler = () => setShowMenu((prev) => !prev)
     return (
-        <>
-            <button
-                id="dropdownBgHoverButton"
-                data-dropdown-toggle="dropdownBgHover"
-                className="inline-flex items-center text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-800 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                type="button"
-                onClick={showMenuHandler}
+        <div className="relative">
+            <div
+                id="dropdownBgHover"
+                className="z-10 w-48 absolute top-2 bg-white rounded-lg shadow border border-gray-300 dark:bg-gray-700 dark:border-gray-900 "
             >
-                Type
-                <svg
-                    className="w-2.5 h-2.5 ms-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
+                <ul
+                    className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownBgHoverButton"
                 >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 4 4 4-4"
-                    />
-                </svg>
-            </button>
-
-            {showMenu && (
-                <div
-                    id="dropdownBgHover"
-                    className="z-10 w-48 absolute bg-white rounded-lg shadow border border-gray-300 dark:bg-gray-700 dark:border-gray-900 "
-                >
-                    <ul
-                        className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownBgHoverButton"
-                    >
-                        {stockTypes?.map((type) => (
-                            <DropfownTypesItem
-                                key={type.name}
-                                {...type}
-                                checkboxHandler={checkboxHandler}
-                            />
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </>
+                    {stockTypes?.map((type) => (
+                        <DropfownTypesItem
+                            key={type.name}
+                            {...type}
+                            checkboxHandler={checkboxHandler}
+                        />
+                    ))}
+                </ul>
+            </div>
+        </div>
     )
 }
 
@@ -101,5 +83,38 @@ function DropfownTypesItem(props: DropdownTypesItemProps) {
                 </label>
             </div>
         </li>
+    )
+}
+
+interface ToggleMenuButton {
+    onClick: React.MouseEventHandler<HTMLButtonElement>
+}
+
+function ToggleMenuButton(props: ToggleMenuButton) {
+    return (
+        <button
+            id="dropdownBgHoverButton"
+            data-dropdown-toggle="dropdownBgHover"
+            className="inline-flex items-center text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-800 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+            type="button"
+            onClick={props.onClick}
+        >
+            Type
+            <svg
+                className="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+            >
+                <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                />
+            </svg>
+        </button>
     )
 }
