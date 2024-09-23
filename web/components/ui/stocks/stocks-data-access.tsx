@@ -15,7 +15,7 @@ export const useStockTableContext = () => {
 }
 
 export const useStockTable = () => {
-    const { tickers } = useStockTableContext()
+    const { tickers, searchKeyword } = useStockTableContext()
     const stockTypesContext = useStockTableContext()
     const { stockTypes } = stockTypesContext
     const computeData = useMemo(() => {

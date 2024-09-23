@@ -8,7 +8,7 @@ import tickerService from '@/services/ticker'
 const StocksFeature = async () => {
     const res = await tickerService.get()
     return (
-        <StockTableProviders initialTickers={res?.data}>
+        <StockTableProviders searchKeyword="" initialTickers={res?.data}>
             <StocksFeatureContainer>
                 <StocksSummary />
                 <ConditionalFilter />

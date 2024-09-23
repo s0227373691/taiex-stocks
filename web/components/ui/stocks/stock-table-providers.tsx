@@ -10,28 +10,33 @@ export type StockType = {
 }
 
 export type StockTypeContextType = {
+    tickers: tickerType[]
     stockTypes: StockType[]
     setStockTypes: Dispatch<SetStateAction<StockType[]>>
-    tickers: tickerType[]
+    searchKeyword: string
+    setSearchKeyword: Dispatch<SetStateAction<string>>
 }
 interface StocksTableProvidersProps {
-    initialTickers: tickerType[]
     children: ReactNode
+    initialTickers: tickerType[]
+    searchKeyword: string
 }
 
 export default function StockTableProviders(props: StocksTableProvidersProps) {
-    const [tickers] = useState(props.initialTickers)
     const [stockTypes, setStockTypes] = useState([
         { name: 'EQUITY', isChecked: true },
         { name: 'INDEX', isChecked: true },
     ])
+    const [searchKeyword, setSearchKeyword] = useState(props.searchKeyword)
 
     return (
         <StockTypesContext.Provider
             value={{
+                tickers: props.initialTickers,
                 stockTypes,
                 setStockTypes,
-                tickers,
+                searchKeyword,
+                setSearchKeyword,
             }}
         >
             {props.children}
