@@ -1,18 +1,39 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useStockTable } from './stocks-data-access'
 import { StockType } from './stock-table-providers'
 
 const StockDropdownTypes = () => {
     const [showMenu, setShowMenu] = useState(false)
-    const showMenuHandler = () => setShowMenu((prev) => !prev)
+    const toggleMenuButtonRef = useRef<HTMLDivElement>(null)
+    useDocumentClick(toggleMenuButtonRef, setShowMenu)
+
+    const handleShowMenu = () => setShowMenu((prev) => !prev)
+
     return (
-        <div>
-            <ToggleMenuButton onClick={showMenuHandler} />
+        <div ref={toggleMenuButtonRef}>
+            <ToggleMenuButton onClick={handleShowMenu} />
             {showMenu && <DropfownTypes />}
         </div>
     )
+}
+
+function useDocumentClick(
+    ref: React.RefObject<HTMLDivElement>,
+    setState: React.Dispatch<React.SetStateAction<boolean>>
+) {
+    const handleDocumentClick = (event: MouseEvent) => {
+        const isClickInside = ref.current?.contains(event.target as Node)
+        setState((prev) => (isClickInside ? prev : false))
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleDocumentClick)
+        return () => {
+            document.removeEventListener('mousedown', handleDocumentClick)
+        }
+    }, [])
 }
 
 export default StockDropdownTypes
@@ -50,7 +71,7 @@ function DropfownTypes() {
                         <DropfownTypesItem
                             key={type.name}
                             {...type}
-                            checkboxHandler={checkboxHandler}
+                            onChange={checkboxHandler}
                         />
                     ))}
                 </ul>
@@ -60,23 +81,24 @@ function DropfownTypes() {
 }
 
 interface DropdownTypesItemProps extends StockType {
-    checkboxHandler: (name: string) => void
+    onChange: (name: string) => void
 }
 
 function DropfownTypesItem(props: DropdownTypesItemProps) {
+    const elementId = `checkbox-item-${props.name}`
     return (
         <li key={props.name}>
             <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                 <input
-                    id="checkbox-item-4"
+                    id={elementId}
                     type="checkbox"
                     value=""
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     checked={props.isChecked}
-                    onChange={() => props.checkboxHandler(props.name)}
+                    onChange={() => props.onChange(props.name)}
                 />
                 <label
-                    htmlFor="checkbox-item-4"
+                    htmlFor={elementId}
                     className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
                 >
                     {props.name}
