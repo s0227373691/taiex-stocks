@@ -19,15 +19,41 @@ export const useStockTable = () => {
     const stockTypesContext = useStockTableContext()
     const { stockTypes } = stockTypesContext
     const computeData = useMemo(() => {
-        const isStockTypesAllChecked = stockTypes.every((el) => el.isChecked)
-        if (isStockTypesAllChecked) return tickers
+        let data = [...tickers]
 
-        const checkedStockTypes = stockTypes
-            .filter((el) => el.isChecked)
-            .map((el) => el.name)
+        // filter stock types
+        const isEveryStockTypesChecked = stockTypes.every((el) => el.isChecked)
+        if (!isEveryStockTypesChecked) {
+            const checkedStockTypes = stockTypes
+                .filter((el) => el.isChecked)
+                .map((el) => el.name)
 
-        return tickers.filter((el: any) => checkedStockTypes.includes(el.type))
-    }, [tickers, stockTypes])
+            data = data.filter((el: any) => checkedStockTypes.includes(el.type))
+        }
+
+        // filter search keyword
+        if (searchKeyword !== '') {
+            data = data.filter((el) => {
+                const str = el.name + el.symbol
+                let strIdx = 0
+                for (const searchKeywordChar of searchKeyword) {
+                    let found = false
+                    for (let j = strIdx; j < str.length; j++) {
+                        const strChar = str[j]
+                        if (searchKeywordChar === strChar) {
+                            strIdx = j + 1
+                            found = true
+                            break
+                        }
+                    }
+                    if (!found) return false
+                }
+                return true
+            })
+        }
+
+        return data
+    }, [tickers, stockTypes, searchKeyword])
 
     return { data: computeData, ...stockTypesContext }
 }
