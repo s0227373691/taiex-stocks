@@ -12,11 +12,9 @@ const StocksTable = async () => {
                         Symbol
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Market
-                    </th>
-                    <th scope="col" className="px-6 py-3">
                         Type
                     </th>
+                    <th scope="col" className="px-6 py-3"></th>
                 </tr>
             </thead>
             <StocksTableBodyView />
