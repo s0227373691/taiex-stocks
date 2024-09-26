@@ -16,7 +16,7 @@ export const useStockTableContext = () => {
 
 export const useStockTable = () => {
     const filteredTickers = useFilterTicker()
-    console.log(filteredTickers)
+    // console.log(filteredTickers)
     const { tickers, searchKeyword } = useStockTableContext()
     const stockTypesContext = useStockTableContext()
     const { stockTypes } = stockTypesContext

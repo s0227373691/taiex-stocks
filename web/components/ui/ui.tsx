@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ThemeModeButton from './theme-mode-button'
+import ThemeModeButton from '@/features/NavBar/components/theme-mode-button'
 
 export function NavBar() {
     return (
