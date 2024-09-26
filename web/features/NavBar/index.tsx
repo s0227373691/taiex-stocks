@@ -1,9 +1,11 @@
+'use client'
+
+import { useId } from 'react'
 import NavbarContainer from './components/navbar-container'
 import ThemeModeButton from './components/theme-mode-button'
 import MobileButton from './components/mobile-button'
 import LogoLink from './components/logo-link'
 import Menu from './components/menu'
-import { useId } from 'react'
 
 const NavBar = () => {
     const id = useId()
