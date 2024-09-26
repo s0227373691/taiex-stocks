@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useHistorical } from '../../data-access'
+import { useHistorical } from '@/components/data-access'
 
 interface useATHParams {
     id: string

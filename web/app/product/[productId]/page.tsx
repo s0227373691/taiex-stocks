@@ -1,4 +1,4 @@
-import ProductFeature from '@/components/product/product-feature'
+import ProductFeature from '@/features/product'
 
 export default function Page() {
     return <ProductFeature />
