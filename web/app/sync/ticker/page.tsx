@@ -1,4 +1,4 @@
-import TickerFeature from '@/components/sync/ticker/ticker-feature'
+import TickerFeature from '@/features/sync/ticker'
 
 const Page = () => <TickerFeature />
 export default Page

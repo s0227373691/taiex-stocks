@@ -9,7 +9,7 @@ import {
     Title,
 } from './ticker-ui'
 
-const Feature = () => {
+const TickerFeature = () => {
     const { mutate, isPending, status, data } = useTickers()
 
     return (
@@ -23,4 +23,4 @@ const Feature = () => {
     )
 }
 
-export default Feature
+export default TickerFeature

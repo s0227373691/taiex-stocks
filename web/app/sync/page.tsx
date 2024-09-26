@@ -1,4 +1,4 @@
-import SyncFeature from '@/components/sync/sync-feature'
+import SyncFeature from '@/features/sync'
 
 const Page = () => <SyncFeature />
 export default Page

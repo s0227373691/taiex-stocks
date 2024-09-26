@@ -1,4 +1,4 @@
-import CryptoFeature from '@/components/product/crypto/crypto-feature'
+import CryptoFeature from '@/features/product/crypto'
 
 const Page = () => <CryptoFeature />
 export default Page
