@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import ThemeModeButton from '@/features/NavBar/components/theme-mode-button'
+import ThemeModeButton from './theme-button'
 
-export function NavBar() {
+const NavBar = () => {
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -14,7 +14,7 @@ export function NavBar() {
                         className="h-8"
                         alt="Flowbite Logo"
                     />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-700 dark:text-white">
                         Taiex stocks
                     </span>
                 </Link>
@@ -87,3 +87,5 @@ export function NavBar() {
         </nav>
     )
 }
+
+export default NavBar
