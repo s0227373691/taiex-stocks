@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useVegasTunnel } from '../hooks/hooks'
+import { useVegasTunnel } from '@/components/hooks/hooks'
 import {
     useHistoricalCrypto,
     useHistoricalCryptos,
