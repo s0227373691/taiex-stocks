@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useHistorical, useTickers } from '../../data-access'
+import { useHistorical, useTickers } from '@/components/data-access'
 import { useParams } from 'next/navigation'
-import useEmas from '../../hooks/indicators/useEmas'
-import useSmas from '../../hooks/indicators/useSmas'
+import useEmas from '@/components/hooks/indicators/useEmas'
+import useSmas from '@/components/hooks/indicators/useSmas'
 
 export default function useMA() {
     const { productId } = useParams()
