@@ -1,7 +1,14 @@
 import React from 'react'
+import Sidebar from './components/sidebar'
+import PageContent from './components/page-content'
 
 const InvestmentStrategiesFeature = () => {
-    return <div>InvestmentStrategiesFeature</div>
+    return (
+        <div className="w-full">
+            <Sidebar />
+            <PageContent />
+        </div>
+    )
 }
 
 export default InvestmentStrategiesFeature
