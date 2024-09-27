@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import { ReactQueryProvider } from './react-query-provider'
-import NavBar from '@/components/ui/navbar'
+import NavBar from '@/components/navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
