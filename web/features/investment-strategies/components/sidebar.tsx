@@ -6,10 +6,8 @@ import SidebarContent from './sidebar-content'
 const Sidebar = () => {
     const id = useId()
     return (
-        <>
-            {/* <MobileSidebarButton id={id} /> */}
-            <SidebarContent id={id} />
-        </>
+        // {/* <MobileSidebarButton id={id} /> */}
+        <SidebarContent id={id} />
     )
 }
 

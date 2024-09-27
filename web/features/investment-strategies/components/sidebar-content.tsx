@@ -74,15 +74,12 @@ interface ContainerProps {
 
 function Container(props: ContainerProps) {
     return (
-        <aside
+        <div
             id={props.id}
-            className="w-64 flex transition-transform -translate-x-full sm:translate-x-0"
-            aria-label="Sidebar"
+            className="sticky top-[121px] px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 "
         >
-            <div className="flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 ">
-                {props.children}
-            </div>
-        </aside>
+            {props.children}
+        </div>
     )
 }
 

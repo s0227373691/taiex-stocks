@@ -3,7 +3,9 @@
 import React from 'react'
 
 const ThemeModeButton = () => {
-    const handleToggleMode = () => document.body.classList.toggle('dark')
+    // const handleToggleMode = () =>  document.body.classList.toggle('dark')
+    const handleToggleMode = () =>
+        document.documentElement.classList.toggle('dark')
     return (
         <Button onClick={handleToggleMode}>
             <IconMoon />

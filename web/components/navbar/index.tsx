@@ -10,12 +10,14 @@ import Nav from './components/nav'
 const NavBar = () => {
     const id = useId()
     return (
-        <Nav>
-            <LogoLink href="/">Taiex stocks</LogoLink>
-            <MobileMenuButton id={id} />
-            <Menu id={id} />
-            <ThemeModeButton />
-        </Nav>
+        <header className="sticky top-0 z-[9999]">
+            <Nav>
+                <LogoLink href="/">Taiex stocks</LogoLink>
+                <MobileMenuButton id={id} />
+                <Menu id={id} />
+                <ThemeModeButton />
+            </Nav>
+        </header>
     )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const PageContent = () => {
     return (
-        <div className="w-full p-4 sm:ml-64 ">
+        <div className="w-auto p-4 sm:ml-64 bg-gray-500">
             <p className="text-gray-900 dark:text-white"></p>
             <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
                 <div className="grid grid-cols-3 gap-4 mb-4">
