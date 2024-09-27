@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { EMA } from 'technicalindicators'
 
-export default function (periods: number[], values: number[] | undefined) {
+const useEmas = (periods: number[], values: number[] | undefined) => {
     return useMemo(
         () =>
             periods.map((period) => ({
@@ -12,3 +12,4 @@ export default function (periods: number[], values: number[] | undefined) {
         [periods, values]
     )
 }
+export default useEmas
