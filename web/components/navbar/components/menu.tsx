@@ -10,6 +10,7 @@ const Menu = (props: MenuProps) => {
         { href: '/', text: 'Home', ariaCurrent: 'page' },
         { href: '/product/2330', text: 'Products' },
         // { href: '/explore', text: 'Explore' },
+        { href: '/investment-strategies', text: 'Investment Strategies' },
         { href: '/sync', text: 'Sync' },
     ]
     return (
