@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Children, useId, useState } from 'react'
 
 interface SidebarContentProps {
@@ -74,10 +76,10 @@ function Container(props: ContainerProps) {
     return (
         <aside
             id={props.id}
-            className="fixed bottom-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0"
+            className="w-64 flex transition-transform -translate-x-full sm:translate-x-0"
             aria-label="Sidebar"
         >
-            <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+            <div className="flex flex-col px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 ">
                 {props.children}
             </div>
         </aside>
@@ -194,18 +196,20 @@ function SidebarItemsCuratedStrategies() {
                     Curated Strategies
                 </span>
                 <svg
-                    className="w-3 h-3"
+                    className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
                     fill="none"
-                    viewBox="0 0 10 6"
+                    viewBox="0 0 24 24"
                 >
                     <path
                         stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 4 4 4-4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="m19 9-7 7-7-7"
                     />
                 </svg>
             </button>
@@ -254,18 +258,20 @@ function SidebarItemsCategories() {
                     Group
                 </span>
                 <svg
-                    className="w-3 h-3"
+                    className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
                     fill="none"
-                    viewBox="0 0 10 6"
+                    viewBox="0 0 24 24"
                 >
                     <path
                         stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 4 4 4-4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="m19 9-7 7-7-7"
                     />
                 </svg>
             </button>

@@ -7,7 +7,7 @@ const Sidebar = () => {
     const id = useId()
     return (
         <>
-            <MobileSidebarButton id={id} />
+            {/* <MobileSidebarButton id={id} /> */}
             <SidebarContent id={id} />
         </>
     )

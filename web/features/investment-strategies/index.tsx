@@ -4,7 +4,7 @@ import PageContent from './components/page-content'
 
 const InvestmentStrategiesFeature = () => {
     return (
-        <div className="w-full">
+        <div className="w-full h-full flex">
             <Sidebar />
             <PageContent />
         </div>
