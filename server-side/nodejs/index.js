@@ -15,6 +15,7 @@ const tickerRoute = require("./src/routes/ticker.route");
 const historicalRoute = require("./src/routes/historical.route");
 const syncRoute = require("./src/routes/sync.route");
 const marketRoute = require("./src/routes/market.route");
+const indicatorRoute = require("./src/routes/indicator.route");
 
 const LogRocket = require("logrocket");
 LogRocket.init("YOUR_APP_ID");
@@ -40,6 +41,7 @@ app.use("/ticker", tickerRoute);
 app.use("/historical", historicalRoute);
 app.use("/sync", syncRoute);
 app.use("/market", marketRoute);
+app.use("/indicator", indicatorRoute);
 // app.use("/externalData", marketRoute);
 
 app.listen(PORT, () =>
