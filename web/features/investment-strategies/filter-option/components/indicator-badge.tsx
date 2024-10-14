@@ -9,10 +9,16 @@ const IndicatorBadgeList = () => {
         { id: 'xcver', name: 'SMA', type: 'sma', period: 55 },
     ]
     return (
-        <div className="flex">
-            {data.map((el) => (
-                <IndicatorBadge key={el.id} {...el} />
-            ))}
+        <div className="p-4">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                EMA (Exponential Moving Average)
+            </h3>
+            <div className="flex">
+                {data.map((el) => (
+                    <IndicatorBadge key={el.id} {...el} />
+                ))}
+                <CreateIndicatorBadge />
+            </div>
         </div>
     )
 }
@@ -30,6 +36,14 @@ function IndicatorBadge(props: IndicatorBadgeProps) {
     return (
         <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-3 py-2 rounded dark:bg-gray-700 dark:text-gray-300">
             {props.name} {props.period}
+        </span>
+    )
+}
+
+function CreateIndicatorBadge() {
+    return (
+        <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-3 py-2 rounded dark:bg-gray-700 dark:text-gray-400">
+            +
         </span>
     )
 }
