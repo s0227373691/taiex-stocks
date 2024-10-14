@@ -1,33 +1,22 @@
+import { getIndicators } from '@/services/indicator'
 import React from 'react'
 
-const IndicatorBadgeList = () => {
-    const data = [
-        { id: 'aksbdq,bfq', name: 'EMA', type: 'ema', period: 12 },
-        { id: 'akdewshtr', name: 'EMA', type: 'ema', period: 34 },
-        { id: 'sxvrthe', name: 'EMA', type: 'ema', period: 55 },
-        { id: 'fdgynfb', name: 'SMA', type: 'sma', period: 34 },
-        { id: 'xcver', name: 'SMA', type: 'sma', period: 55 },
-    ]
+const IndicatorBadgeList = async () => {
+    const indicator = await getIndicators()
+    console.log(indicator)
     return (
-        <div className="p-4">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                EMA (Exponential Moving Average)
-            </h3>
-            <div className="flex">
-                {data.map((el) => (
-                    <IndicatorBadge key={el.id} {...el} />
-                ))}
-                <CreateIndicatorBadge />
-            </div>
-        </div>
+        <>
+            {indicator?.data.map((el: any) => (
+                <IndicatorBadge key={el._id} {...el} />
+            ))}
+        </>
     )
 }
 
 export default IndicatorBadgeList
 
 interface IndicatorBadgeProps {
-    id: string
-    name: string
+    _id: string
     type: string
     period: number
 }
@@ -35,15 +24,7 @@ interface IndicatorBadgeProps {
 function IndicatorBadge(props: IndicatorBadgeProps) {
     return (
         <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-3 py-2 rounded dark:bg-gray-700 dark:text-gray-300">
-            {props.name} {props.period}
-        </span>
-    )
-}
-
-function CreateIndicatorBadge() {
-    return (
-        <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-3 py-2 rounded dark:bg-gray-700 dark:text-gray-400">
-            +
+            {props.type} {props.period}
         </span>
     )
 }

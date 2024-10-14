@@ -1,10 +1,10 @@
 import React from 'react'
-import IndicatorBadgeList from './components/indicator-badge'
+import EmaIndicatorCard from './components/ema-indicator-card'
 
 const FilterOptionFeature = () => {
     return (
         <div>
-            <IndicatorBadgeList />
+            <EmaIndicatorCard />
         </div>
     )
 }
