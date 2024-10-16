@@ -14,7 +14,9 @@ export async function getIndicators() {
             cache: 'no-cache',
         })
         if (!response.ok) throw new Error('Failed to fetch indicators')
-        return response.json()
+        const parse = await response.json()
+        const sort = parse.data.sort((a: any, b: any) => a.period - b.period)
+        return { data: sort }
     } catch (error) {
         console.error(error)
     }

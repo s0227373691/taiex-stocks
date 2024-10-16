@@ -3,7 +3,6 @@ import React from 'react'
 
 const IndicatorBadgeList = async () => {
     const indicator = await getIndicators()
-    console.log(indicator)
     return (
         <>
             {indicator?.data.map((el: any) => (
