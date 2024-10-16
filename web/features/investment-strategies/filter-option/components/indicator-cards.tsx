@@ -44,3 +44,24 @@ export const SmaIndicatorCard = () => {
         </IndicatorCard.Container>
     )
 }
+
+export const WmaIndicatorCard = () => {
+    const handlerCreateWma = () => {
+        const period = prompt('Input WMA period')
+        indicatorService.createIndicators({
+            type: 'wma',
+            period: Number(period),
+        })
+    }
+    return (
+        <IndicatorCard.Container>
+            <IndicatorCard.Head>
+                WMA (Weighted Moving Average)
+            </IndicatorCard.Head>
+            <IndicatorCard.Body>
+                <IndicatorBadgeList type="wma" />
+                <CreateEmaIndicatorBadge onClick={handlerCreateWma} />
+            </IndicatorCard.Body>
+        </IndicatorCard.Container>
+    )
+}

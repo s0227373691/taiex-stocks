@@ -4,6 +4,7 @@ import React from 'react'
 import {
     EmaIndicatorCard,
     SmaIndicatorCard,
+    WmaIndicatorCard,
 } from './components/indicator-cards'
 
 const FilterOptionFeature = () => {
@@ -11,6 +12,7 @@ const FilterOptionFeature = () => {
         <div>
             <EmaIndicatorCard />
             <SmaIndicatorCard />
+            <WmaIndicatorCard />
         </div>
     )
 }

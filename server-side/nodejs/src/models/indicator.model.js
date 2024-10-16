@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const indicatorSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ["ema", "sma"],
+    enum: ["ema", "sma", "wma"],
     require: true,
   },
   period: {

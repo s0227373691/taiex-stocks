@@ -2,7 +2,7 @@ import { getIndicators } from '@/services/indicator'
 import React from 'react'
 
 interface IndicatorBadgeListProps {
-    type?: 'ema' | 'sma'
+    type?: 'ema' | 'sma' | 'wma'
 }
 
 const IndicatorBadgeList = async (props: IndicatorBadgeListProps) => {

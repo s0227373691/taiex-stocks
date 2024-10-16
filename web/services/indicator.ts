@@ -8,7 +8,7 @@ export default {
 }
 
 interface getIndicatorsParams {
-    type?: 'sma' | 'ema'
+    type?: 'sma' | 'ema' | 'wma'
 }
 export async function getIndicators(params: getIndicatorsParams = {}) {
     try {
@@ -26,7 +26,7 @@ export async function getIndicators(params: getIndicatorsParams = {}) {
 }
 
 interface createIndicatorsParams {
-    type: 'ema' | 'sma'
+    type: 'ema' | 'sma' | 'wma'
     period: number
 }
 
