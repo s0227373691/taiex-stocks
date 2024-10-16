@@ -7,9 +7,12 @@ export default {
     createIndicators,
 }
 
-export async function getIndicators() {
+interface getIndicatorsParams {
+    type?: 'sma' | 'ema'
+}
+export async function getIndicators(params: getIndicatorsParams = {}) {
     try {
-        const url = new URL(`${route}`, base)
+        const url = new URL(`${route}/${params.type}`, base)
         const response = await fetch(url, {
             cache: 'no-cache',
         })

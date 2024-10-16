@@ -1,10 +1,16 @@
+'use client'
+
 import React from 'react'
-import EmaIndicatorCard from './components/ema-indicator-card'
+import {
+    EmaIndicatorCard,
+    SmaIndicatorCard,
+} from './components/indicator-cards'
 
 const FilterOptionFeature = () => {
     return (
         <div>
             <EmaIndicatorCard />
+            <SmaIndicatorCard />
         </div>
     )
 }

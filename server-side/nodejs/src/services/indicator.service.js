@@ -1,8 +1,7 @@
 const Indicator = require("../models/indicator.model");
 
-async function query() {
-  const res = await Indicator.find();
-  return res;
+function query(params) {
+  return Indicator.find({ type: params.type });
 }
 
 async function create({ type, period }) {

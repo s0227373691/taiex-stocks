@@ -1,9 +1,8 @@
 const indicatorService = require("../services/indicator.service");
 
 const getIndicators = async (req, res) => {
-  console.log("getIndicators");
-  const data = await indicatorService.query();
-  console.log(data);
+  const params = req.params;
+  const data = await indicatorService.query(params);
   res.json({ data });
 };
 
