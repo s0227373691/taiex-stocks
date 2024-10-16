@@ -15,6 +15,7 @@ const SidebarContent = (props: SidebarContentProps) => {
                 <SidebarItems.Favor />
                 <SidebarItems.FilterOption />
                 <SidebarItems.CuratedStrategies />
+                <SidebarItems.CuratedStrategiesList />
                 <hr />
                 <SidebarItems.Categories />
             </SidebarItems>

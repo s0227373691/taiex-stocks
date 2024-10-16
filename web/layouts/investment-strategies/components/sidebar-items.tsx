@@ -16,6 +16,7 @@ SidebarItems.Overview = SidebarItemsOverview
 SidebarItems.Favor = SidebarItemsFavor
 SidebarItems.FilterOption = SidebarItemsFilterOption
 SidebarItems.CuratedStrategies = SidebarItemsCuratedStrategies
+SidebarItems.CuratedStrategiesList = SidebarItemsCuratedStrategiesList
 SidebarItems.Categories = SidebarItemsCategories
 
 export default SidebarItems
@@ -92,8 +93,38 @@ function SidebarItemsFilterOption() {
         </li>
     )
 }
-
 function SidebarItemsCuratedStrategies() {
+    const pathname = usePathname()
+    return (
+        <li>
+            <Link
+                href={`${pathname}/curated-strategies`}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+                <svg
+                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M5.005 10.19a1 1 0 0 1 1 1v.233l5.998 3.464L18 11.423v-.232a1 1 0 1 1 2 0V12a1 1 0 0 1-.5.866l-6.997 4.042a1 1 0 0 1-1 0l-6.998-4.042a1 1 0 0 1-.5-.866v-.81a1 1 0 0 1 1-1ZM5 15.15a1 1 0 0 1 1 1v.232l5.997 3.464 5.998-3.464v-.232a1 1 0 1 1 2 0v.81a1 1 0 0 1-.5.865l-6.998 4.042a1 1 0 0 1-1 0L4.5 17.824a1 1 0 0 1-.5-.866v-.81a1 1 0 0 1 1-1Z"
+                        clip-rule="evenodd"
+                    />
+                    <path d="M12.503 2.134a1 1 0 0 0-1 0L4.501 6.17A1 1 0 0 0 4.5 7.902l7.002 4.047a1 1 0 0 0 1 0l6.998-4.04a1 1 0 0 0 0-1.732l-6.997-4.042Z" />
+                </svg>
+
+                <span className="ms-3">Curated Strategies</span>
+            </Link>
+        </li>
+    )
+}
+
+function SidebarItemsCuratedStrategiesList() {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <li>
@@ -114,7 +145,7 @@ function SidebarItemsCuratedStrategies() {
                     <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
                 </svg>
                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
-                    Curated Strategies
+                    Curated Strategies List
                 </span>
                 <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
