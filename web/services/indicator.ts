@@ -10,6 +10,7 @@ export default {
 interface getIndicatorsParams {
     type?: 'sma' | 'ema' | 'wma'
 }
+
 export async function getIndicators(params: getIndicatorsParams = {}) {
     try {
         const url = new URL(`${route}/${params.type}`, base)
